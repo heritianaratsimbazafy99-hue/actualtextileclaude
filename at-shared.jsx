@@ -40,6 +40,7 @@ function Label({ children, color = 'var(--amber)' }) {
 // ── Shared Nav ────────────────────────────────────────────────────────────────
 function SharedNav({ lang, setLang, scrolled, activePage }) {
   const t = useT();
+  const [mobileOpen, setMobileOpen] = _useState(false);
   const navLinks = [
     { key: 'about',          label: t.nav.about,          href: './about.html' },
     { key: 'production',     label: t.nav.production,     href: './production.html' },
@@ -47,30 +48,37 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
     { key: 'news',           label: t.nav.news,            href: 'https://www.actualtextiles.com/news/' },
   ];
 
-  const bg     = scrolled ? 'rgba(248,245,240,0.97)' : 'transparent';
-  const border = scrolled ? '1px solid var(--border)'  : '1px solid rgba(255,255,255,0.15)';
-  const col    = scrolled ? 'var(--dark)' : 'white';
+  _useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const navSolid = scrolled || mobileOpen;
+  const bg     = navSolid ? 'rgba(248,245,240,0.97)' : 'transparent';
+  const border = navSolid ? '1px solid var(--border)'  : '1px solid rgba(255,255,255,0.15)';
+  const col    = navSolid ? 'var(--dark)' : 'white';
 
   return (
-    <nav style={{
+    <nav className={`at-nav ${mobileOpen ? 'is-open' : ''}`} style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
       background: bg, borderBottom: border,
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
+      backdropFilter: navSolid ? 'blur(12px)' : 'none',
       transition: 'background .35s, border-color .35s',
     }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px',
+      <div className="at-nav-inner" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
 
         {/* Logo */}
-        <a href="./index.html" style={{ display: 'flex', alignItems: 'center' }}>
+        <a className="at-nav-logo" href="./index.html" style={{ display: 'flex', alignItems: 'center' }}>
           <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
             alt="Actual Textiles"
-            style={{ height: 30, width: 'auto', filter: scrolled ? 'none' : 'brightness(0) invert(1)', transition: 'filter .35s' }}
+            style={{ height: 30, width: 'auto', filter: navSolid ? 'none' : 'brightness(0) invert(1)', transition: 'filter .35s' }}
           />
         </a>
 
         {/* Links */}
-        <div style={{ display: 'flex', gap: 34, alignItems: 'center' }}>
+        <div className="at-nav-links" style={{ display: 'flex', gap: 34, alignItems: 'center' }}>
           {navLinks.map(l => {
             const isActive = activePage === l.key;
             return (
@@ -89,8 +97,8 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
         </div>
 
         {/* Lang + CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-          <div style={{ display: 'flex', gap: 10 }}>
+        <div className="at-nav-actions" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+          <div className="at-lang-switch" style={{ display: 'flex', gap: 10 }}>
             {['EN','FR'].map(lg => {
               const isActive = (lang || 'en').toUpperCase() === lg;
               return (
@@ -102,13 +110,57 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
               );
             })}
           </div>
-          <a href="mailto:info@actualtextiles.com" style={{
+          <a className="at-nav-contact" href="mailto:info@actualtextiles.com" style={{
             background: scrolled ? 'var(--forest)' : 'rgba(255,255,255,0.15)',
             border: scrolled ? 'none' : '1px solid rgba(255,255,255,0.5)',
             color: 'white', padding: '9px 20px',
             fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
             transition: 'all .25s', whiteSpace: 'nowrap',
           }}>{t.nav.contact}</a>
+        </div>
+
+        <button
+          className="at-nav-toggle"
+          type="button"
+          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen(v => !v)}
+          style={{
+            display: 'none',
+            width: 42,
+            height: 42,
+            border: '1px solid rgba(255,255,255,0.45)',
+            background: 'rgba(255,255,255,0.12)',
+            color: col,
+            cursor: 'pointer',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            gap: 5,
+          }}
+        >
+          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', transform: mobileOpen ? 'translateY(6px) rotate(45deg)' : 'none', transition: 'transform .2s' }} />
+          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', opacity: mobileOpen ? 0 : 1, transition: 'opacity .2s' }} />
+          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', transform: mobileOpen ? 'translateY(-6px) rotate(-45deg)' : 'none', transition: 'transform .2s' }} />
+        </button>
+      </div>
+      <div className="at-nav-mobile-panel" hidden={!mobileOpen}>
+        {navLinks.map(l => {
+          const isActive = activePage === l.key;
+          return (
+            <a key={l.key} href={l.href} onClick={() => setMobileOpen(false)}
+              className={isActive ? 'is-active' : ''}>{l.label}</a>
+          );
+        })}
+        <div className="at-nav-mobile-tools">
+          {['EN','FR'].map(lg => {
+            const isActive = (lang || 'en').toUpperCase() === lg;
+            return (
+              <button key={lg} type="button" className={isActive ? 'is-active' : ''}
+                onClick={() => { setLang(lg.toLowerCase()); setMobileOpen(false); }}>{lg}</button>
+            );
+          })}
+          <a href="mailto:info@actualtextiles.com" onClick={() => setMobileOpen(false)}>{t.nav.contact}</a>
         </div>
       </div>
     </nav>
@@ -118,14 +170,14 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
 // ── Page Hero (internal pages) ────────────────────────────────────────────────
 function PageHero({ label, title, titleItalic, imgSrc, breadcrumb }) {
   return (
-    <div style={{ position: 'relative', height: '52vh', minHeight: 380, overflow: 'hidden' }}>
+    <div className="at-page-hero" style={{ position: 'relative', height: '52vh', minHeight: 380, overflow: 'hidden' }}>
       <img src={imgSrc} alt={title}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', objectPosition: 'center 40%', filter: 'brightness(0.42)' }}
       />
       <div style={{ position: 'absolute', inset: 0,
         background: 'linear-gradient(160deg,rgba(14,26,18,.78) 0%,rgba(14,26,18,.4) 100%)' }} />
-      <div style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto',
+      <div className="at-page-hero-inner" style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto',
         padding: '0 48px', height: '100%', display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end', paddingBottom: 64 }}>
         {breadcrumb && (
@@ -151,9 +203,9 @@ function SharedFooter() {
   const t = useT();
   const ft = t.footer;
   return (
-    <footer style={{ background: 'var(--dark)', color: 'white', padding: '72px 0 36px' }}>
+    <footer className="at-footer" style={{ background: 'var(--dark)', color: 'white', padding: '72px 0 36px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', gap: 44, marginBottom: 60 }}>
+        <div className="at-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', gap: 44, marginBottom: 60 }}>
           {/* Brand */}
           <div>
             <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
