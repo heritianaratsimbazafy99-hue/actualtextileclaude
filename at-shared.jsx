@@ -1,37 +1,44 @@
-// at-shared.jsx — SharedNav, SharedFooter, Reveal, Label, useReveal
-// Requires: at-i18n.jsx loaded first (provides LangCtx, useT)
+// at-shared.jsx v3 — SharedNav (hamburger), SharedFooter, PageHero, Reveal, Label
+// + useIsMobile hook + MobileCtx
+const { useState:_us, useEffect:_ue, useRef:_ur, useContext:_uc, createContext:_cc } = React;
 
-const { useState: _useState, useEffect: _useEffect, useRef: _useRef } = React;
+// ── Responsive ────────────────────────────────────────────────────────────────
+function useIsMobile(bp = 768) {
+  const [m, setM] = _us(() => window.innerWidth < bp);
+  _ue(() => {
+    const fn = () => setM(window.innerWidth < bp);
+    window.addEventListener('resize', fn, { passive:true });
+    return () => window.removeEventListener('resize', fn);
+  }, [bp]);
+  return m;
+}
+const MobileCtx = React.createContext(false);
+function useMobile() { return React.useContext(MobileCtx); }
 
-// ── Scroll reveal ─────────────────────────────────────────────────────────────
-function useReveal(threshold = 0.12) {
-  const ref = _useRef(null);
-  const [visible, setVisible] = _useState(false);
-  _useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
-    }, { threshold });
+// ── Reveal ────────────────────────────────────────────────────────────────────
+function useReveal(threshold = 0.1) {
+  const ref = _ur(null);
+  const [v, setV] = _us(false);
+  _ue(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setV(true); obs.disconnect(); } }, { threshold });
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
-  return [ref, visible];
+  return [ref, v];
 }
-
-function Reveal({ children, delay = 0, y = 28 }) {
-  const [ref, visible] = useReveal();
+function Reveal({ children, delay=0, y=26 }) {
+  const [ref, v] = useReveal();
   return (
-    <div ref={ref} style={{
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : `translateY(${y}px)`,
-      transition: `opacity .75s ${delay}s cubic-bezier(.22,1,.36,1), transform .75s ${delay}s cubic-bezier(.22,1,.36,1)`,
-    }}>{children}</div>
+    <div ref={ref} style={{ opacity:v?1:0, transform:v?'none':`translateY(${y}px)`,
+      transition:`opacity .7s ${delay}s cubic-bezier(.22,1,.36,1), transform .7s ${delay}s cubic-bezier(.22,1,.36,1)` }}>
+      {children}
+    </div>
   );
 }
-
-function Label({ children, color = 'var(--amber)' }) {
+function Label({ children, color='var(--amber)' }) {
   return (
-    <div style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-      fontFamily: 'DM Sans, sans-serif', fontWeight: 500, color, marginBottom: 18 }}>
+    <div style={{ fontSize:11, letterSpacing:'0.2em', textTransform:'uppercase',
+      fontFamily:'DM Sans, sans-serif', fontWeight:500, color, marginBottom:16 }}>
       {children}
     </div>
   );
@@ -40,158 +47,141 @@ function Label({ children, color = 'var(--amber)' }) {
 // ── Shared Nav ────────────────────────────────────────────────────────────────
 function SharedNav({ lang, setLang, scrolled, activePage }) {
   const t = useT();
-  const [mobileOpen, setMobileOpen] = _useState(false);
-  const navLinks = [
-    { key: 'about',          label: t.nav.about,          href: './about.html' },
-    { key: 'production',     label: t.nav.production,     href: './production.html' },
-    { key: 'sustainability', label: t.nav.sustainability,  href: './sustainability.html' },
-    { key: 'contact',        label: t.nav.contact,         href: './contact.html' },
+  const isMobile = useIsMobile();
+  const [open, setOpen] = _us(false);
+
+  const links = [
+    { key:'about',          label:t.nav.about,         href:'./about.html' },
+    { key:'production',     label:t.nav.production,    href:'./production.html' },
+    { key:'sustainability', label:t.nav.sustainability, href:'./sustainability.html' },
+    { key:'contact',        label:t.nav.contactPage,   href:'./contact.html' },
   ];
 
-  _useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const navSolid = scrolled || mobileOpen;
-  const bg     = navSolid ? 'rgba(248,245,240,0.97)' : 'transparent';
-  const border = navSolid ? '1px solid var(--border)'  : '1px solid rgba(255,255,255,0.15)';
-  const col    = navSolid ? 'var(--dark)' : 'white';
+  const opaque = scrolled || open;
+  const bg  = opaque ? 'rgba(248,245,240,0.97)' : 'transparent';
+  const col = opaque ? 'var(--dark)' : 'white';
+  const bdr = opaque ? '1px solid var(--border)' : '1px solid rgba(255,255,255,0.14)';
 
   return (
-    <nav className={`at-nav ${mobileOpen ? 'is-open' : ''}`} style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      background: bg, borderBottom: border,
-      backdropFilter: navSolid ? 'blur(12px)' : 'none',
-      transition: 'background .35s, border-color .35s',
-    }}>
-      <div className="at-nav-inner" style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 68 }}>
-
-        {/* Logo */}
-        <a className="at-nav-logo" href="./index.html" style={{ display: 'flex', alignItems: 'center' }}>
+    <nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, background:bg,
+      borderBottom:bdr, backdropFilter:opaque?'blur(14px)':'none', transition:'background .3s, border-color .3s' }}>
+      {/* Top bar */}
+      <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${isMobile?'20px':'48px'}`,
+        display:'flex', alignItems:'center', justifyContent:'space-between', height:isMobile?56:68 }}>
+        <a href="./Actual Textiles Redesign.html" style={{ display:'flex', alignItems:'center' }}>
           <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
             alt="Actual Textiles"
-            style={{ height: 30, width: 'auto', filter: navSolid ? 'none' : 'brightness(0) invert(1)', transition: 'filter .35s' }}
-          />
+            style={{ height:isMobile?26:30, width:'auto',
+              filter:opaque?'none':'brightness(0) invert(1)', transition:'filter .3s' }} />
         </a>
 
-        {/* Links */}
-        <div className="at-nav-links" style={{ display: 'flex', gap: 34, alignItems: 'center' }}>
-          {navLinks.map(l => {
-            const isActive = activePage === l.key;
+        {isMobile ? (
+          <button onClick={() => setOpen(o => !o)} style={{ background:'none', border:'none',
+            color:col, fontSize:20, cursor:'pointer', padding:'6px 8px', lineHeight:1, transition:'color .2s' }}>
+            {open ? '✕' : '☰'}
+          </button>
+        ) : (
+          <>
+            <div style={{ display:'flex', gap:32, alignItems:'center' }}>
+              {links.map(l => {
+                const active = activePage === l.key;
+                return (
+                  <a key={l.key} href={l.href} style={{ fontSize:12, fontWeight:active?600:500,
+                    letterSpacing:'0.09em', textTransform:'uppercase', color:col,
+                    opacity:active?1:0.82, borderBottom:`1px solid ${active?(opaque?'var(--amber)':'rgba(255,255,255,.6)'):'transparent'}`,
+                    paddingBottom:2, transition:'opacity .15s' }}
+                    onMouseEnter={e=>e.currentTarget.style.opacity=1}
+                    onMouseLeave={e=>e.currentTarget.style.opacity=active?1:0.82}
+                  >{l.label}</a>
+                );
+              })}
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:22 }}>
+              <div style={{ display:'flex', gap:10 }}>
+                {['EN','FR'].map(lg => {
+                  const active = (lang||'en').toUpperCase()===lg;
+                  return (
+                    <button key={lg} onClick={()=>setLang(lg.toLowerCase())} style={{ background:'none', border:'none',
+                      cursor:'pointer', fontSize:11, fontWeight:active?600:400,
+                      letterSpacing:'0.14em', color:col, opacity:active?1:0.4 }}>{lg}</button>
+                  );
+                })}
+              </div>
+              <a href="./contact.html" style={{ background:opaque?'var(--forest)':'rgba(255,255,255,.15)',
+                border:opaque?'none':'1px solid rgba(255,255,255,.45)', color:'white',
+                padding:'9px 20px', fontSize:11, fontWeight:600, letterSpacing:'0.12em',
+                textTransform:'uppercase', transition:'all .2s', whiteSpace:'nowrap' }}>
+                {t.nav.ctaBtn}
+              </a>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Mobile drawer */}
+      {isMobile && open && (
+        <div style={{ background:'var(--cream)', borderTop:'1px solid var(--border)',
+          padding:'8px 20px 24px', animation:'fadeIn .2s ease' }}>
+          {links.map(l => {
+            const active = activePage === l.key;
             return (
-              <a key={l.key} href={l.href} style={{
-                fontSize: 12, fontWeight: isActive ? 600 : 500,
-                letterSpacing: '0.09em', textTransform: 'uppercase',
-                color: col, opacity: isActive ? 1 : 0.8,
-                borderBottom: isActive ? `1px solid ${scrolled ? 'var(--amber)' : 'rgba(255,255,255,0.7)'}` : '1px solid transparent',
-                paddingBottom: 2, transition: 'opacity .15s',
-              }}
-                onMouseEnter={e => e.currentTarget.style.opacity = 1}
-                onMouseLeave={e => e.currentTarget.style.opacity = isActive ? 1 : 0.8}
-              >{l.label}</a>
+              <a key={l.key} href={l.href} onClick={()=>setOpen(false)} style={{
+                display:'flex', justifyContent:'space-between', alignItems:'center',
+                padding:'15px 0', fontSize:16, fontWeight:active?600:400,
+                color:active?'var(--amber)':'var(--dark)',
+                borderBottom:'1px solid var(--border)' }}>
+                {l.label}
+                <span style={{ fontSize:14, opacity:.4 }}>→</span>
+              </a>
             );
           })}
-        </div>
-
-        {/* Lang + CTA */}
-        <div className="at-nav-actions" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
-          <div className="at-lang-switch" style={{ display: 'flex', gap: 10 }}>
-            {['EN','FR'].map(lg => {
-              const isActive = (lang || 'en').toUpperCase() === lg;
-              return (
-                <button key={lg} onClick={() => setLang(lg.toLowerCase())} style={{
-                  background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-                  fontSize: 11, fontWeight: isActive ? 600 : 400,
-                  letterSpacing: '0.14em', color: col, opacity: isActive ? 1 : 0.4,
-                }}>{lg}</button>
-              );
-            })}
+          <div style={{ marginTop:20, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <div style={{ display:'flex', gap:18 }}>
+              {['EN','FR'].map(lg => {
+                const active = (lang||'en').toUpperCase()===lg;
+                return (
+                  <button key={lg} onClick={()=>{setLang(lg.toLowerCase());setOpen(false);}} style={{
+                    background:'none', border:'none', cursor:'pointer', padding:0,
+                    fontSize:13, fontWeight:active?700:400, color:'var(--dark)',
+                    opacity:active?1:0.4, letterSpacing:'0.1em' }}>{lg}</button>
+                );
+              })}
+            </div>
+            <a href="./contact.html" onClick={()=>setOpen(false)} style={{ background:'var(--forest)',
+              color:'white', padding:'11px 22px', fontSize:11, fontWeight:600,
+              letterSpacing:'0.12em', textTransform:'uppercase' }}>{t.nav.ctaBtn}</a>
           </div>
-          <a className="at-nav-contact" href="./contact.html" style={{
-            background: scrolled ? 'var(--forest)' : 'rgba(255,255,255,0.15)',
-            border: scrolled ? 'none' : '1px solid rgba(255,255,255,0.5)',
-            color: 'white', padding: '9px 20px',
-            fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
-            transition: 'all .25s', whiteSpace: 'nowrap',
-          }}>{t.nav.cta || t.nav.contact}</a>
         </div>
-
-        <button
-          className="at-nav-toggle"
-          type="button"
-          aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen(v => !v)}
-          style={{
-            display: 'none',
-            width: 42,
-            height: 42,
-            border: '1px solid rgba(255,255,255,0.45)',
-            background: 'rgba(255,255,255,0.12)',
-            color: col,
-            cursor: 'pointer',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            gap: 5,
-          }}
-        >
-          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', transform: mobileOpen ? 'translateY(6px) rotate(45deg)' : 'none', transition: 'transform .2s' }} />
-          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', opacity: mobileOpen ? 0 : 1, transition: 'opacity .2s' }} />
-          <span style={{ width: 18, height: 1, background: 'currentColor', display: 'block', transform: mobileOpen ? 'translateY(-6px) rotate(-45deg)' : 'none', transition: 'transform .2s' }} />
-        </button>
-      </div>
-      <div className="at-nav-mobile-panel" hidden={!mobileOpen}>
-        {navLinks.map(l => {
-          const isActive = activePage === l.key;
-          return (
-            <a key={l.key} href={l.href} onClick={() => setMobileOpen(false)}
-              className={isActive ? 'is-active' : ''}>{l.label}</a>
-          );
-        })}
-        <div className="at-nav-mobile-tools">
-          {['EN','FR'].map(lg => {
-            const isActive = (lang || 'en').toUpperCase() === lg;
-            return (
-              <button key={lg} type="button" className={isActive ? 'is-active' : ''}
-                onClick={() => { setLang(lg.toLowerCase()); setMobileOpen(false); }}>{lg}</button>
-            );
-          })}
-          <a href="./contact.html" onClick={() => setMobileOpen(false)}>{t.nav.cta || t.nav.contact}</a>
-        </div>
-      </div>
+      )}
     </nav>
   );
 }
 
-// ── Page Hero (internal pages) ────────────────────────────────────────────────
+// ── Page Hero ─────────────────────────────────────────────────────────────────
 function PageHero({ label, title, titleItalic, imgSrc, breadcrumb }) {
+  const isMobile = useIsMobile();
   return (
-    <div className="at-page-hero" style={{ position: 'relative', height: '52vh', minHeight: 380, overflow: 'hidden' }}>
-      <img src={imgSrc} alt={title}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%',
-          objectFit: 'cover', objectPosition: 'center 40%', filter: 'brightness(0.42)' }}
-      />
-      <div style={{ position: 'absolute', inset: 0,
-        background: 'linear-gradient(160deg,rgba(14,26,18,.78) 0%,rgba(14,26,18,.4) 100%)' }} />
-      <div className="at-page-hero-inner" style={{ position: 'relative', zIndex: 2, maxWidth: 1280, margin: '0 auto',
-        padding: '0 48px', height: '100%', display: 'flex', flexDirection: 'column',
-        justifyContent: 'flex-end', paddingBottom: 64 }}>
+    <div style={{ position:'relative', height:isMobile?'45vh':'52vh', minHeight:isMobile?280:360, overflow:'hidden' }}>
+      <img src={imgSrc} alt={title} style={{ position:'absolute', inset:0,
+        width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 40%', filter:'brightness(.4)' }} />
+      <div style={{ position:'absolute', inset:0,
+        background:'linear-gradient(160deg,rgba(14,26,18,.8) 0%,rgba(14,26,18,.38) 100%)' }} />
+      <div style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto',
+        padding:`0 ${isMobile?'20px':'48px'}`, height:'100%',
+        display:'flex', flexDirection:'column', justifyContent:'flex-end', paddingBottom:isMobile?40:64 }}>
         {breadcrumb && (
-          <div style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>{breadcrumb}</div>
+          <div style={{ fontSize:10.5, letterSpacing:'0.15em', textTransform:'uppercase',
+            color:'rgba(255,255,255,.42)', marginBottom:16 }}>{breadcrumb}</div>
         )}
-        <div style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-          color: 'var(--amber)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ width: 28, height: 1, background: 'currentColor', display: 'inline-block' }} />
+        <div style={{ fontSize:11, letterSpacing:'0.2em', textTransform:'uppercase',
+          color:'var(--amber)', marginBottom:14, display:'flex', alignItems:'center', gap:10 }}>
+          <span style={{ width:24, height:1, background:'currentColor', display:'inline-block' }} />
           {label}
         </div>
-        <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 'clamp(42px,5vw,72px)',
-          fontWeight: 300, color: 'white', lineHeight: 1.05, letterSpacing: '-0.02em' }}>
-          {title}{titleItalic && <><br /><em style={{ fontStyle: 'italic' }}>{titleItalic}</em></>}
+        <h1 style={{ fontFamily:'Cormorant Garamond, serif',
+          fontSize:`clamp(${isMobile?'34px':'42px'},5vw,72px)`,
+          fontWeight:300, color:'white', lineHeight:1.05, letterSpacing:'-0.02em' }}>
+          {title}{titleItalic && <><br /><em style={{ fontStyle:'italic' }}>{titleItalic}</em></>}
         </h1>
       </div>
     </div>
@@ -202,46 +192,59 @@ function PageHero({ label, title, titleItalic, imgSrc, breadcrumb }) {
 function SharedFooter() {
   const t = useT();
   const ft = t.footer;
+  const m = useMobile();
   return (
-    <footer className="at-footer" style={{ background: 'var(--dark)', color: 'white', padding: '72px 0 36px' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
-        <div className="at-footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', gap: 44, marginBottom: 60 }}>
-          {/* Brand */}
+    <footer style={{ background:'var(--dark)', color:'white', padding:m?'56px 0 32px':'72px 0 36px' }}>
+      <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${m?'20px':'48px'}` }}>
+        <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1.4fr 1fr 1fr 1fr 1fr',
+          gap:m?40:44, marginBottom:m?44:60 }}>
           <div>
             <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
               alt="Actual Textiles"
-              style={{ height: 36, width: 'auto', filter: 'brightness(0) invert(1)', marginBottom: 22 }}
-            />
-            <p style={{ fontSize: 13.5, lineHeight: 1.75, opacity: 0.5, marginBottom: 22, maxWidth: 230 }}>{ft.tagline}</p>
-            <div style={{ fontSize: 13, opacity: 0.45, lineHeight: 2.1 }}>
+              style={{ height:34, width:'auto', filter:'brightness(0) invert(1)', marginBottom:20 }} />
+            <p style={{ fontSize:13, lineHeight:1.75, opacity:.5, marginBottom:20, maxWidth:240 }}>{ft.tagline}</p>
+            <div style={{ fontSize:12.5, opacity:.42, lineHeight:2.1 }}>
               <div>Ambohipanja Ilafy, Tana 103</div>
               <div>Antananarivo, Madagascar</div>
-              <div style={{ marginTop: 6 }}>+261 20 23 277 66</div>
+              <div style={{ marginTop:4 }}>+261 20 23 277 66</div>
               <div>info@actualtextiles.com</div>
             </div>
           </div>
-          {ft.cols.map((col, i) => (
-            <div key={i}>
-              <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase',
-                opacity: 0.38, marginBottom: 18 }}>{col.title}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {col.links.map((l, j) => (
-                  <a key={j} href={l.href} style={{ fontSize: 13.5, opacity: 0.6, color: 'white',
-                    textDecoration: 'none', transition: 'opacity .15s' }}
-                    onMouseEnter={e => e.currentTarget.style.opacity = 1}
-                    onMouseLeave={e => e.currentTarget.style.opacity = 0.6}
-                  >{l.label}</a>
-                ))}
-              </div>
+          {m ? (
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:32 }}>
+              {ft.cols.map((col,i) => (
+                <div key={i}>
+                  <div style={{ fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', opacity:.35, marginBottom:14 }}>{col.title}</div>
+                  <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                    {col.links.map((l,j) => (
+                      <a key={j} href={l.href} style={{ fontSize:13, opacity:.6, color:'white', textDecoration:'none' }}>{l.label}</a>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            ft.cols.map((col,i) => (
+              <div key={i}>
+                <div style={{ fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase', opacity:.35, marginBottom:18 }}>{col.title}</div>
+                <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                  {col.links.map((l,j) => (
+                    <a key={j} href={l.href} style={{ fontSize:13, opacity:.6, color:'white', textDecoration:'none', transition:'opacity .15s' }}
+                      onMouseEnter={e=>e.currentTarget.style.opacity=1}
+                      onMouseLeave={e=>e.currentTarget.style.opacity=0.6}>{l.label}</a>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
         </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 26,
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
-          <div style={{ fontSize: 11.5, opacity: 0.3 }}>{ft.copyright}</div>
-          <div style={{ display: 'flex', gap: 20 }}>
-            <a href="https://www.linkedin.com/company/actual-textiles" style={{ fontSize: 11, opacity: 0.4, color: 'white', textDecoration: 'none' }}>LinkedIn</a>
-            <a href="https://www.facebook.com" style={{ fontSize: 11, opacity: 0.4, color: 'white', textDecoration: 'none' }}>Facebook</a>
+        <div style={{ borderTop:'1px solid rgba(255,255,255,.1)', paddingTop:24,
+          display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:10 }}>
+          <div style={{ fontSize:11, opacity:.28 }}>{ft.copyright}</div>
+          <div style={{ display:'flex', gap:18 }}>
+            {['LinkedIn','Facebook'].map(s => (
+              <a key={s} href="#" style={{ fontSize:11, opacity:.38, color:'white', textDecoration:'none' }}>{s}</a>
+            ))}
           </div>
         </div>
       </div>
@@ -249,4 +252,4 @@ function SharedFooter() {
   );
 }
 
-Object.assign(window, { useReveal, Reveal, Label, SharedNav, SharedFooter, PageHero });
+Object.assign(window, { useIsMobile, MobileCtx, useMobile, useReveal, Reveal, Label, SharedNav, SharedFooter, PageHero });

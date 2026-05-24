@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — Actual Textiles Madagascar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="at-responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -17,7 +15,6 @@
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
     img{max-width:100%;display:block} a{text-decoration:none;color:inherit} button{font-family:inherit}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
   </style>
 </head>
 <body>
@@ -26,50 +23,51 @@
   <script type="text/babel" src="at-shared.jsx"></script>
   <script type="text/babel">
     const { useState, useEffect } = React;
+    const sp = (m) => `${m?'64px':'110px'} 0`;
+    const pad = (m) => `0 ${m?'20px':'48px'}`;
 
-    // ── Overview ──────────────────────────────────────────────────────────────
     function OverviewSection() {
-      const t = useT(); const lang = useLang();
+      const lang = useLang(); const m = useMobile();
+      const isFr = lang === 'fr';
       return (
-        <section style={{ padding:'110px 0', background:'var(--cream)' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section style={{ padding:sp(m), background:'var(--cream)' }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:96, alignItems:'center' }}>
             <Reveal>
               <div style={{ position:'relative' }}>
                 <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
-                  alt="Madagascar"
-                  style={{ width:'100%', height:560, objectFit:'cover', objectPosition:'center 35%' }} />
-                <div style={{ position:'absolute', bottom:-28, right:-28, background:'var(--amber)', color:'white', padding:'20px 28px', zIndex:2 }}>
-                  <div style={{ fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', opacity:.8, marginBottom:4 }}>Est.</div>
-                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:38, fontWeight:300, lineHeight:1 }}>2002</div>
+                  alt="Madagascar" style={{ width:'100%', height:m?280:560, objectFit:'cover', objectPosition:'center 32%' }} />
+                <div style={{ position:'absolute', bottom:m?-16:-26, right:m?-8:-26,
+                  background:'var(--amber)', color:'white', padding:m?'12px 16px':'20px 28px', zIndex:2 }}>
+                  <div style={{ fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', opacity:.78 }}>Est.</div>
+                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?26:38, fontWeight:300, lineHeight:1, marginTop:4 }}>2002</div>
                 </div>
               </div>
             </Reveal>
-            <Reveal delay={0.15}>
-              <Label>{lang==='fr' ? 'Qui sommes-nous' : 'Who we are'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Un leader<br /><em>du textile</em><br />malgache</> : <>A leader in<br /><em>Malagasy</em><br />garment craft</>}
+            <Reveal delay={m?0:0.14}>
+              <Label>{isFr?'Qui sommes-nous':'Who we are'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>Un leader<br /><em>du textile</em><br />malgache</>:<>A leader in<br /><em>Malagasy</em><br />garment craft</>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:18 }}>
-                {lang==='fr'
-                  ? "Depuis 2002, Actual Textiles est l'un des principaux fabricants de vêtements à Madagascar. Nous combinons le savoir-faire artisanal malgache avec des technologies de pointe pour produire des vêtements d'une qualité irréprochable."
-                  : "Since 2002, Actual Textiles has been one of Madagascar's leading garment manufacturers. We combine traditional Malagasy craftsmanship with cutting-edge technology to produce garments of uncompromising quality."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:16 }}>
+                {isFr?"Depuis 2002, Actual Textiles est l'un des principaux fabricants de vêtements à Madagascar. Nous combinons le savoir-faire artisanal malgache avec des technologies de pointe pour produire des vêtements d'une qualité irréprochable."
+                     :"Since 2002, Actual Textiles has been one of Madagascar's leading garment manufacturers. We combine traditional Malagasy craftsmanship with cutting-edge technology to produce garments of uncompromising quality."}
               </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:32 }}>
-                {lang==='fr'
-                  ? "Nous avons forgé des partenariats solides avec des marques internationales de renom comme Petit Bateau, Jacadi, Etam, Princesse Tam Tam et Obaibi — repoussant constamment les limites de la qualité pour dépasser les attentes de nos clients."
-                  : "We have built strong partnerships with renowned international brands such as Petit Bateau, Jacadi, Etam, Princesse Tam Tam and Obaibi — constantly pushing the boundaries of quality to exceed our clients' expectations."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:32 }}>
+                {isFr?"Nos partenariats avec Petit Bateau, Jacadi, Etam, Princesse Tam Tam et Obaibi témoignent de notre engagement à dépasser les attentes de nos clients."
+                     :"Our partnerships with Petit Bateau, Jacadi, Etam, Princesse Tam Tam and Obaibi reflect our commitment to consistently exceeding clients' expectations."}
               </p>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:20 }}>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:m?16:20 }}>
                 {[
-                  { n:'20+', label: lang==='fr' ? "Années d'expérience" : 'Years of experience' },
-                  { n:'100%', label: lang==='fr' ? 'Énergie solaire' : 'Solar energy' },
-                  { n:'7+', label: lang==='fr' ? 'Marques partenaires' : 'Partner brands' },
-                  { n:'4', label: lang==='fr' ? 'Continents desservis' : 'Continents served' },
+                  { n:'20+', label:isFr?"Années d'expérience":'Years of experience' },
+                  { n:'100%', label:isFr?'Énergie solaire':'Solar energy' },
+                  { n:'7+',  label:isFr?'Marques partenaires':'Partner brands' },
+                  { n:'4',   label:isFr?'Continents desservis':'Continents served' },
                 ].map((s,i) => (
-                  <div key={i} style={{ borderLeft:'2px solid var(--amber)', paddingLeft:16 }}>
-                    <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:36, fontWeight:300, lineHeight:1, color:'var(--dark)' }}>{s.n}</div>
-                    <div style={{ fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mid)', marginTop:4 }}>{s.label}</div>
+                  <div key={i} style={{ borderLeft:'2px solid var(--amber)', paddingLeft:14 }}>
+                    <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?28:34, fontWeight:300, lineHeight:1 }}>{s.n}</div>
+                    <div style={{ fontSize:10.5, letterSpacing:'0.12em', textTransform:'uppercase', color:'var(--mid)', marginTop:4 }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -79,93 +77,98 @@
       );
     }
 
-    // ── Madagascar ────────────────────────────────────────────────────────────
     function MadagascarSection() {
-      const lang = useLang();
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
       return (
-        <section id="madagascar" style={{ background:'var(--forest)', color:'white', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section id="madagascar" style={{ background:'var(--forest)', color:'white', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:96, alignItems:'center' }}>
             <Reveal>
-              <Label color="rgba(255,255,255,0.45)">{lang==='fr' ? 'Le pays' : 'The country'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Madagascar,<br /><em>un atout</em><br />stratégique</> : <>Madagascar,<br /><em>a strategic</em><br />advantage</>}
+              <Label color="rgba(255,255,255,.45)">{isFr?'Le pays':'The country'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>Madagascar,<br /><em>un atout</em><br />stratégique</>:<>Madagascar,<br /><em>a strategic</em><br />advantage</>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.75, marginBottom:18 }}>
-                {lang==='fr'
-                  ? "Madagascar est reconnue pour sa riche biodiversité et ses ressources naturelles exceptionnelles. Notre usine, implantée en zone franche à Antananarivo, vous permet d'optimiser vos coûts tout en bénéficiant d'une qualité textile premium."
-                  : "Madagascar is renowned for its rich biodiversity and exceptional natural resources. Our factory, located in a free zone in Antananarivo, allows you to optimise costs while benefitting from premium-quality textile production."}
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.75, marginBottom:16 }}>
+                {isFr?"Notre usine, implantée en zone franche à Antananarivo, vous permet d'optimiser vos coûts tout en bénéficiant d'une qualité textile premium."
+                     :"Our factory, located in a free zone in Antananarivo, allows you to optimise costs while benefitting from premium-quality textile production."}
               </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.75, marginBottom:36 }}>
-                {lang==='fr'
-                  ? "Nous bénéficions d'accords commerciaux préférentiels GSP EUR1 SADC et AGOA, permettant l'exportation en franchise de droits vers l'Europe, le Royaume-Uni, l'Amérique du Nord et l'Afrique du Sud."
-                  : "We benefit from GSP EUR1 SADC and AGOA preferential trade agreements, enabling duty-free exports to Europe, the UK, North America, and South Africa."}
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.75, marginBottom:28 }}>
+                {isFr?"Nous bénéficions des accords GSP EUR1 SADC et AGOA — exportation en franchise de droits vers l'Europe, le Royaume-Uni, l'Amérique du Nord et l'Afrique du Sud."
+                     :"We benefit from GSP EUR1 SADC and AGOA trade agreements, enabling duty-free exports to Europe, the UK, North America, and South Africa."}
               </p>
-              <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-                {[
-                  { icon:'◈', text: lang==='fr' ? 'Zone franche — avantages fiscaux optimisés' : 'Free zone — optimised fiscal advantages' },
-                  { icon:'◈', text: lang==='fr' ? 'AGOA — accès en franchise aux États-Unis' : 'AGOA — duty-free access to the US market' },
-                  { icon:'◈', text: lang==='fr' ? 'GSP EUR1 SADC — exportation vers l\'Europe' : 'GSP EUR1 SADC — exports to European markets' },
-                  { icon:'◈', text: lang==='fr' ? 'Main-d\'œuvre qualifiée à coût compétitif' : 'Skilled workforce at competitive costs' },
-                ].map((item,i) => (
-                  <div key={i} style={{ display:'flex', alignItems:'flex-start', gap:14 }}>
-                    <span style={{ color:'var(--amber)', marginTop:1 }}>{item.icon}</span>
-                    <span style={{ fontSize:15, lineHeight:1.6, opacity:.8 }}>{item.text}</span>
+              <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                {(isFr
+                  ?['Zone franche — avantages fiscaux optimisés','AGOA — accès en franchise aux États-Unis','GSP EUR1 SADC — exportation vers l\'Europe','Main-d\'œuvre qualifiée à coût compétitif']
+                  :['Free zone — optimised fiscal advantages','AGOA — duty-free access to the US market','GSP EUR1 SADC — exports to European markets','Skilled workforce at competitive costs']
+                ).map((item,i) => (
+                  <div key={i} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
+                    <span style={{ color:'var(--amber)', marginTop:1, flexShrink:0 }}>◈</span>
+                    <span style={{ fontSize:14.5, lineHeight:1.65, opacity:.8 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </Reveal>
-            <Reveal delay={0.15}>
+            <Reveal delay={m?0:0.14}>
               <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
                 alt="Madagascar" loading="lazy"
-                style={{ width:'100%', height:580, objectFit:'cover', objectPosition:'center 20%' }} />
+                style={{ width:'100%', height:m?260:520, objectFit:'cover', objectPosition:'center 20%' }} />
             </Reveal>
           </div>
         </section>
       );
     }
 
-    // ── Factory ───────────────────────────────────────────────────────────────
     function FactorySection() {
-      const lang = useLang();
-      const depts = lang==='fr'
-        ? [
-            { title:'Ventes & Marketing', desc:"En contact permanent avec nos clients, l'équipe commerciale suit chaque projet de A à Z, conseille sur les spécifications et planifie les capacités.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_ventes.jpg' },
-            { title:'Développement produit', desc:"Prototypes, gradations, échantillons SMS et de pré-production — notre équipe utilise le système LECTRA pour générer des modèles précis et fiables.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg' },
-            { title:'Coupe', desc:"Notre atelier de coupe respecte scrupuleusement les spécifications de patron pour garantir la précision à chaque étape de la confection.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg' },
-            { title:'Couture', desc:"Travaillant avec AQL 1.0, nos couturières assemblent méticuleusement chaque pièce selon des standards qualité stricts.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg' },
-            { title:'Finition & Inspection', desc:"Inspection complète à 100% — vêtements vérifiés, repassés, étiquetés et conditionnés selon les exigences exactes de chaque client.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-finition_inspection.jpg' },
-            { title:'Logistique', desc:"FOB, CIF ou LDP — notre équipe logistique garantit une expédition rapide et compétitive. Fret aérien disponible. Formulaire SGP EUR1 inclus.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg' },
-          ]
-        : [
-            { title:'Sales & Marketing', desc:"In constant contact with clients, the sales team follows every project step by step, advises on specifications, and forward plans production capacity.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_ventes.jpg' },
-            { title:'Product Development', desc:"Prototypes, size sets, SMS and pre-production samples — our team uses the LECTRA system to generate accurate and reliable models.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg' },
-            { title:'Cutting', desc:"The cutting room strictly adheres to all pattern specifications, ensuring precision at every subsequent phase of garment construction.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg' },
-            { title:'Sewing', desc:"Working with AQL 1.0, our sewers meticulously assemble every garment in adherence to strict quality guidelines.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg' },
-            { title:'Finishing & Inspection', desc:"100% comprehensive inspection — garments are fully screened, pressed, labeled and packaged to exact client specifications.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-finition_inspection.jpg' },
-            { title:'Logistics', desc:"FOB, CIF or LDP — our logistics team ensures competitive, on-time delivery. Air freight available. All garments ship with the SGP EUR1 form.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg' },
-          ];
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      const depts = [
+        { title:isFr?'Ventes & Marketing':'Sales & Marketing', num:'01',
+          desc:isFr?"En contact permanent avec nos clients, l'équipe commerciale suit chaque projet de A à Z et planifie les capacités de production."
+                  :"In constant contact with clients, the sales team follows every project step by step and plans production capacity.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_ventes.jpg' },
+        { title:isFr?'Développement produit':'Product Development', num:'02',
+          desc:isFr?"Prototypes, gradations, échantillons SMS et de pré-production — notre équipe utilise le système LECTRA pour des modèles précis."
+                  :"Prototypes, size sets, SMS and pre-production samples — our team uses the LECTRA system to generate accurate models.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg' },
+        { title:isFr?'Coupe':'Cutting', num:'03',
+          desc:isFr?"Notre atelier de coupe respecte scrupuleusement les spécifications de patron pour garantir la précision à chaque étape."
+                  :"The cutting room strictly adheres to all pattern specifications, ensuring precision at every phase of construction.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg' },
+        { title:isFr?'Couture':'Sewing', num:'04',
+          desc:isFr?"Travaillant avec AQL 1.0, nos couturières assemblent méticuleusement chaque pièce selon des standards qualité stricts."
+                  :"Working with AQL 1.0, our sewers meticulously assemble every garment to strict quality guidelines.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg' },
+        { title:isFr?'Finition & Inspection':'Finishing & Inspection', num:'05',
+          desc:isFr?"Inspection complète à 100% — vêtements vérifiés, repassés, étiquetés et conditionnés selon les exigences exactes."
+                  :"100% comprehensive inspection — garments fully screened, pressed, labeled and packaged to exact specifications.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-finition_inspection.jpg' },
+        { title:isFr?'Logistique':'Logistics', num:'06',
+          desc:isFr?"Expédition FOB, CIF ou LDP avec fret aérien compétitif. Formulaire SGP EUR1 inclus sur toutes les livraisons."
+                  :"FOB, CIF or LDP dispatch with competitive air freight. SGP EUR1 form included on all deliveries.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg' },
+      ];
       return (
-        <section id="factory" style={{ background:'var(--stone)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <section id="factory" style={{ background:'var(--stone)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
             <Reveal>
-              <Label>{lang==='fr' ? 'Nos départements' : 'Our departments'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:60, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>{`L'usine`}<br /><em>de A à Z</em></> : <>The factory,<br /><em>start to finish</em></>}
+              <Label>{isFr?'Nos départements':'Our departments'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?36:56, letterSpacing:'-0.01em' }}>
+                {isFr?<>L'usine,<br /><em>de A à Z</em></>:<>The factory,<br /><em>start to finish</em></>}
               </h2>
             </Reveal>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:2 }}>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr 1fr':'repeat(3,1fr)', gap:m?8:2 }}>
               {depts.map((d,i) => (
-                <Reveal key={i} delay={i*0.07}>
+                <Reveal key={i} delay={i*.06}>
                   <div style={{ background:'white', overflow:'hidden' }}>
                     <img src={d.img} alt={d.title} loading="lazy"
-                      style={{ width:'100%', height:200, objectFit:'cover' }} />
-                    <div style={{ padding:'24px 24px 28px' }}>
+                      style={{ width:'100%', height:m?140:200, objectFit:'cover' }} />
+                    <div style={{ padding:m?'16px 14px 20px':'22px 22px 26px' }}>
                       <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase',
-                        color:'var(--amber)', marginBottom:10 }}>0{i+1}</div>
-                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:22, fontWeight:400,
-                        marginBottom:10 }}>{d.title}</h3>
-                      <p style={{ fontSize:13.5, lineHeight:1.72, color:'var(--mid)' }}>{d.desc}</p>
+                        color:'var(--amber)', marginBottom:8 }}>{d.num}</div>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?17:21,
+                        fontWeight:400, marginBottom:8 }}>{d.title}</h3>
+                      {!m && <p style={{ fontSize:13, lineHeight:1.7, color:'var(--mid)' }}>{d.desc}</p>}
                     </div>
                   </div>
                 </Reveal>
@@ -176,36 +179,43 @@
       );
     }
 
-    // ── Team ──────────────────────────────────────────────────────────────────
     function TeamSection() {
-      const lang = useLang();
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
       const team = [
-        { name:'Mezbine Ismael', role: lang==='fr' ? 'Fondateur' : 'Founder',
+        { name:'Mezbine Ismael', role:isFr?'Fondateur':'Founder',
           img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Mezbine-ISMAEL.png',
-          bio: lang==='fr' ? "Fondateur d'Actual Textiles, Mezbine a bâti l'entreprise sur les valeurs de qualité, d'intégrité et d'innovation depuis 2002." : "Founder of Actual Textiles, Mezbine built the company on the values of quality, integrity and innovation since 2002." },
-        { name:'Ilann Hiridjee', role: lang==='fr' ? 'Directeur Général' : 'General Manager',
+          bio:isFr?"Fondateur d'Actual Textiles, Mezbine a bâti l'entreprise sur les valeurs de qualité, d'intégrité et d'innovation depuis 2002."
+                 :"Founder of Actual Textiles, Mezbine built the company on quality, integrity and innovation since 2002." },
+        { name:'Ilann Hiridjee', role:isFr?'Directeur Général':'General Manager',
           img:'https://www.actualtextiles.com/wp-content/uploads/2022/06/ilann_hiridjee.png',
-          bio: lang==='fr' ? "Ilann dirige les opérations d'Actual Textiles avec une vision centrée sur l'innovation, la durabilité et la satisfaction client." : "Ilann leads Actual Textiles operations with a vision centered on innovation, sustainability and customer satisfaction." },
+          bio:isFr?"Ilann dirige les opérations d'Actual Textiles avec une vision centrée sur l'innovation, la durabilité et la satisfaction client."
+                 :"Ilann leads Actual Textiles operations with a vision centered on innovation, sustainability and client satisfaction." },
       ];
       return (
-        <section style={{ background:'var(--cream)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <section style={{ background:'var(--cream)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
             <Reveal>
-              <Label>{lang==='fr' ? 'Notre équipe' : 'Our team'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:60, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Les visages<br /><em>derrière la marque</em></> : <>The people<br /><em>behind the brand</em></>}
+              <Label>{isFr?"Notre équipe":'Our team'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?36:56, letterSpacing:'-0.01em' }}>
+                {isFr?<>Les visages<br /><em>derrière la marque</em></>:<>The people<br /><em>behind the brand</em></>}
               </h2>
             </Reveal>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(2,360px)', gap:48 }}>
-              {team.map((m,i) => (
-                <Reveal key={i} delay={i*0.12}>
-                  <div>
-                    <img src={m.img} alt={m.name} loading="lazy"
-                      style={{ width:160, height:160, objectFit:'cover', objectPosition:'top',
-                        borderRadius:'50%', marginBottom:24, filter:'grayscale(15%)' }} />
-                    <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--amber)', marginBottom:8 }}>{m.role}</div>
-                    <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:28, fontWeight:400, marginBottom:12 }}>{m.name}</h3>
-                    <p style={{ fontSize:14.5, lineHeight:1.75, color:'var(--mid)' }}>{m.bio}</p>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?32:56, maxWidth:m?'100%':780 }}>
+              {team.map((p,i) => (
+                <Reveal key={i} delay={i*.12}>
+                  <div style={{ display:'flex', gap:m?20:28, alignItems:'flex-start' }}>
+                    <img src={p.img} alt={p.name} loading="lazy"
+                      style={{ width:m?72:96, height:m?72:96, objectFit:'cover',
+                        objectPosition:'top', borderRadius:'50%', flexShrink:0, filter:'grayscale(10%)' }}
+                      onError={e=>{e.target.style.display='none';}} />
+                    <div>
+                      <div style={{ fontSize:9.5, letterSpacing:'0.18em', textTransform:'uppercase',
+                        color:'var(--amber)', marginBottom:4 }}>{p.role}</div>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?22:26,
+                        fontWeight:400, marginBottom:10 }}>{p.name}</h3>
+                      <p style={{ fontSize:13.5, lineHeight:1.75, color:'var(--mid)' }}>{p.bio}</p>
+                    </div>
                   </div>
                 </Reveal>
               ))}
@@ -215,42 +225,42 @@
       );
     }
 
-    // ── App ───────────────────────────────────────────────────────────────────
     function App() {
       const [lang, setLang]         = useState(() => localStorage.getItem('at-lang') || 'en');
       const [scrolled, setScrolled] = useState(false);
+      const isMobile                = useIsMobile();
+      const isFr = lang === 'fr';
       const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
       useEffect(() => {
-        const fn = () => setScrolled(window.scrollY > 60);
+        const fn = () => setScrolled(window.scrollY > 56);
         window.addEventListener('scroll', fn, { passive:true });
         return () => window.removeEventListener('scroll', fn);
       }, []);
-      const t = useT;
       return (
         <LangCtx.Provider value={lang}>
-          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="about" />
-          <PageHero
-            label={lang==='fr' ? 'À propos' : 'About us'}
-            title={lang==='fr' ? "Qui sommes" : 'Who we'}
-            titleItalic={lang==='fr' ? "nous ?" : 'are'}
-            imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/fond_actual_textiles_madagascar-min.jpg"
-            breadcrumb={lang==='fr' ? 'Accueil → À propos' : 'Home → About'}
-          />
-          <OverviewSection />
-          <MadagascarSection />
-          <FactorySection />
-          <TeamSection />
-          <section style={{ background:'var(--amber)', color:'white', padding:'72px 48px', textAlign:'center' }}>
-            <Reveal>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:42, fontWeight:400, marginBottom:20 }}>
-                {lang==='fr' ? <>Prêts à travailler <em>ensemble ?</em></> : <>Ready to work <em>together?</em></>}
-              </h2>
-              <a href="./contact.html" style={{ display:'inline-block', background:'white', color:'var(--amber)', padding:'13px 36px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase', marginTop:8 }}>
-                {lang==='fr' ? 'Nous contacter' : 'Get in touch'}
-              </a>
-            </Reveal>
-          </section>
-          <SharedFooter />
+          <MobileCtx.Provider value={isMobile}>
+            <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="about" />
+            <PageHero label={isFr?'À propos':'About us'} title={isFr?'Qui sommes':'Who we'}
+              titleItalic={isFr?'nous ?':'are'}
+              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/fond_actual_textiles_madagascar-min.jpg"
+              breadcrumb={isFr?'Accueil → À propos':'Home → About'} />
+            <OverviewSection />
+            <MadagascarSection />
+            <FactorySection />
+            <TeamSection />
+            <section style={{ background:'var(--amber)', color:'white', padding:isMobile?'56px 20px':'72px 48px', textAlign:'center' }}>
+              <Reveal>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:isMobile?30:42, fontWeight:400, marginBottom:18 }}>
+                  {isFr?<>Prêts à travailler <em>ensemble ?</em></>:<>Ready to work <em>together?</em></>}
+                </h2>
+                <a href="./contact.html" style={{ display:'inline-block', background:'white', color:'var(--amber)',
+                  padding:'13px 36px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase', marginTop:8 }}>
+                  {isFr?'Nous contacter':'Get in touch'}
+                </a>
+              </Reveal>
+            </section>
+            <SharedFooter />
+          </MobileCtx.Provider>
         </LangCtx.Provider>
       );
     }

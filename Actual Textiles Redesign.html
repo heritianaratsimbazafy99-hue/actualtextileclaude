@@ -5,38 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Actual Textiles — Fashion Creator · Madagascar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="at-responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --cream:  oklch(97% 0.009 80);
-      --dark:   oklch(16% 0.018 55);
-      --forest: oklch(36% 0.105 155);
-      --amber:  oklch(59% 0.125 62);
-      --stone:  oklch(93% 0.007 75);
-      --mid:    oklch(50% 0.010 70);
-      --border: oklch(88% 0.008 75);
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark);
-      overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    img { max-width: 100%; display: block; }
-    a { text-decoration: none; color: inherit; }
-    button { font-family: inherit; }
-    @keyframes fadeIn  { from { opacity:0 } to { opacity:1 } }
-    @keyframes slideUp { from { opacity:0; transform:translateY(32px) } to { opacity:1; transform:none } }
-    @keyframes tagFade { 0%,100%{opacity:0;transform:translateY(10px)} 15%,80%{opacity:1;transform:none} }
-    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    .hero-tagline { animation: tagFade 3.2s ease forwards; }
-    .marquee-track { display:flex; animation:marquee 30s linear infinite; width:max-content; }
-    .marquee-track:hover { animation-play-state:paused; }
-    ::-webkit-scrollbar { width:4px; }
-    ::-webkit-scrollbar-thumb { background:var(--forest); }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--cream:oklch(97% .009 80);--dark:oklch(16% .018 55);--forest:oklch(36% .105 155);--amber:oklch(59% .125 62);--stone:oklch(93% .007 75);--mid:oklch(50% .010 70);--border:oklch(88% .008 75)}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block} a{text-decoration:none;color:inherit} button{font-family:inherit}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+    @keyframes tagFade{0%,100%{opacity:0;transform:translateY(8px)}15%,80%{opacity:1;transform:none}}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .hero-tag{animation:tagFade 3.2s ease forwards}
+    .marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
+    .marquee-track:hover{animation-play-state:paused}
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-thumb{background:var(--forest)}
   </style>
 </head>
 <body>
@@ -49,102 +36,116 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
 
-    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-      "accentColor": "amber",
-      "heroStyle": "dark"
-    }/*EDITMODE-END*/;
-
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"accentColor":"amber","heroStyle":"dark"}/*EDITMODE-END*/;
     const ACCENT_MAP = {
-      amber:  { '--amber':'oklch(59% 0.125 62)',  '--forest':'oklch(36% 0.105 155)' },
-      indigo: { '--amber':'oklch(52% 0.18 265)',   '--forest':'oklch(32% 0.12 250)'  },
-      jade:   { '--amber':'oklch(55% 0.14 170)',   '--forest':'oklch(34% 0.10 160)'  },
+      amber:  { '--amber':'oklch(59% 0.125 62)', '--forest':'oklch(36% 0.105 155)' },
+      indigo: { '--amber':'oklch(52% 0.18 265)',  '--forest':'oklch(32% 0.12 250)' },
+      jade:   { '--amber':'oklch(55% 0.14 170)',  '--forest':'oklch(34% 0.10 160)' },
+    };
+
+    const HERO = {
+      en: {
+        tags:['Fashion Creator','Malagasy Know-How','Responsible Company'],
+        h1a:'Excellence', h1b:'in every stitch,', h1c:'from Madagascar',
+        sub:'Innovative leader in garment and accessories design and manufacturing — supplying top fashion brands in Europe, the UK, North America, and South Africa.',
+        cta1:'Discover our story', cta2:'Our production',
+      },
+      fr: {
+        tags:['Cr\u00e9ateur de mode','Savoir-faire Malgache','Entreprise responsable'],
+        h1a:"L'excellence", h1b:'\u00e0 chaque point,', h1c:'depuis Madagascar',
+        sub:"Leader innovant dans la conception et fabrication de v\u00eatements \u2014 fournisseur de grandes marques de mode en Europe, au Royaume-Uni, en Am\u00e9rique du Nord et en Afrique du Sud.",
+        cta1:'Notre histoire', cta2:'Notre production',
+      },
     };
 
     // ── Hero ──────────────────────────────────────────────────────────────────
-    function Hero({ heroStyle, lang }) {
-      const t = useT();
-      const h = t.hero;
+    function Hero({ heroStyle }) {
+      const lang = useLang();
+      const m    = useMobile();
+      const h    = HERO[lang] || HERO.en;
       const [idx, setIdx] = useState(0);
       const [key, setKey] = useState(0);
       useEffect(() => {
-        const timer = setInterval(() => { setIdx(i => (i+1)%3); setKey(k => k+1); }, 3200);
-        return () => clearInterval(timer);
+        const t = setInterval(() => { setIdx(i => (i+1)%3); setKey(k => k+1); }, 3200);
+        return () => clearInterval(t);
       }, []);
       const dark = heroStyle !== 'light';
-      const tc   = dark ? 'white' : 'var(--dark)';
-      const mc   = dark ? 'rgba(255,255,255,0.65)' : 'var(--mid)';
+      const tc = dark ? 'white' : 'var(--dark)';
+      const mc = dark ? 'rgba(255,255,255,0.65)' : 'var(--mid)';
       return (
-        <div id="top" className="at-home-hero" style={{ position:'relative', height:'100vh', minHeight:680, overflow:'hidden' }}>
+        <div id="top" style={{ position:'relative', height:m?'90vh':'100vh', minHeight:m?520:680, overflow:'hidden' }}>
           <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-1.jpeg"
-            alt="Actual Textiles workshop"
-            fetchpriority="high"
-            className="at-home-hero-img"
-            style={{ position:'absolute', inset:0, width:'100%', height:'100%',
-              objectFit:'cover', objectPosition:'center 28%' }} />
-          <div style={{ position:'absolute', inset:0,
-            background: dark
-              ? 'linear-gradient(155deg,rgba(14,26,18,.82) 0%,rgba(14,26,18,.5) 65%,rgba(0,0,0,.25) 100%)'
-              : 'linear-gradient(155deg,rgba(248,245,240,.88) 0%,rgba(248,245,240,.55) 65%,transparent 100%)' }} />
-          <div className="at-home-hero-shell" style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto',
-            padding:'0 48px', height:'100%', display:'flex', flexDirection:'column', justifyContent:'center' }}>
-            <div className="at-home-copy" style={{ maxWidth:660 }}>
-              <div key={key} className="hero-tagline" style={{
-                fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase',
-                color: dark ? 'rgba(255,255,255,0.45)' : 'var(--amber)',
-                marginBottom:22, display:'flex', alignItems:'center', gap:12 }}>
-                <span style={{ width:28, height:1, background:'currentColor', display:'inline-block', flexShrink:0 }} />
-                {h.taglines[idx]}
+            alt="Actual Textiles" fetchpriority="high"
+            style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 28%' }} />
+          <div style={{ position:'absolute', inset:0, background: dark
+            ? 'linear-gradient(155deg,rgba(14,26,18,.84) 0%,rgba(14,26,18,.5) 65%,rgba(0,0,0,.28) 100%)'
+            : 'linear-gradient(155deg,rgba(248,245,240,.9) 0%,rgba(248,245,240,.58) 65%,transparent 100%)' }} />
+          <div style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto',
+            padding:`0 ${m?'20px':'48px'}`, height:'100%',
+            display:'flex', flexDirection:'column', justifyContent:'center' }}>
+            <div style={{ maxWidth:m?'100%':640 }}>
+              <div key={key} className="hero-tag" style={{ fontSize:11, letterSpacing:'0.22em',
+                textTransform:'uppercase', color:dark?'rgba(255,255,255,.44)':'var(--amber)',
+                marginBottom:20, display:'flex', alignItems:'center', gap:10 }}>
+                <span style={{ width:24, height:1, background:'currentColor', display:'inline-block', flexShrink:0 }} />
+                {h.tags[idx]}
               </div>
               <h1 style={{ fontFamily:'Cormorant Garamond, serif',
-                fontSize:'clamp(50px,6.2vw,90px)', fontWeight:300, lineHeight:1.02, color:tc,
-                letterSpacing:'-0.02em', marginBottom:30,
+                fontSize:m?'clamp(40px,11vw,64px)':'clamp(52px,6.2vw,90px)',
+                fontWeight:300, lineHeight:1.02, color:tc, letterSpacing:'-0.02em', marginBottom:m?20:28,
                 animation:'slideUp 1s .1s cubic-bezier(.22,1,.36,1) both' }}>
-                {h.line1}<br /><em style={{ fontWeight:300 }}>{h.line2}</em><br />{h.line3}
+                {h.h1a}<br /><em style={{ fontWeight:300 }}>{h.h1b}</em><br />{h.h1c}
               </h1>
-              <p style={{ fontSize:16.5, lineHeight:1.72, color:mc, maxWidth:500, marginBottom:42,
+              <p style={{ fontSize:m?14.5:16.5, lineHeight:1.72, color:mc,
+                maxWidth:m?'100%':490, marginBottom:m?32:40,
                 animation:'slideUp 1s .25s cubic-bezier(.22,1,.36,1) both' }}>{h.sub}</p>
-              <div className="at-button-row" style={{ display:'flex', gap:14, animation:'slideUp 1s .4s cubic-bezier(.22,1,.36,1) both' }}>
+              <div style={{ display:'flex', gap:12, flexWrap:'wrap',
+                animation:'slideUp 1s .4s cubic-bezier(.22,1,.36,1) both' }}>
                 <a href="./about.html" style={{ background:'var(--amber)', color:'white',
-                  padding:'14px 32px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>{h.cta1}</a>
-                <a href="./production.html" style={{ border:`1px solid ${dark?'rgba(255,255,255,.45)':'var(--dark)'}`,
-                  color:tc, padding:'14px 32px', fontSize:12, fontWeight:500, letterSpacing:'0.12em', textTransform:'uppercase' }}>{h.cta2}</a>
+                  padding:m?'12px 24px':'14px 32px', fontSize:m?11:12, fontWeight:600,
+                  letterSpacing:'0.12em', textTransform:'uppercase' }}>{h.cta1}</a>
+                <a href="./production.html" style={{
+                  border:`1px solid ${dark?'rgba(255,255,255,.44)':'var(--dark)'}`,
+                  color:tc, padding:m?'12px 24px':'14px 32px', fontSize:m?11:12,
+                  fontWeight:500, letterSpacing:'0.12em', textTransform:'uppercase' }}>{h.cta2}</a>
               </div>
             </div>
           </div>
-          {/* Bottom thumbnail strip */}
-          <div className="at-hero-strip" style={{ position:'absolute', bottom:0, left:0, right:0, display:'grid',
-            gridTemplateColumns:'repeat(3,1fr)', height:108,
-            animation:'slideUp 1s .55s cubic-bezier(.22,1,.36,1) both' }}>
-            {[
-              { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/atelier_confection1.jpg', label:'Sewing' },
-              { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg', label:'Fabrics' },
-              { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg', label:'Quality' },
-            ].map((im,i) => (
-              <div key={i} style={{ position:'relative', overflow:'hidden' }}>
-                <img src={im.src} alt={im.label}
-                  style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.55)' }} />
-                <span style={{ position:'absolute', bottom:10, left:14, fontSize:9.5,
-                  letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,.7)' }}>{im.label}</span>
-              </div>
-            ))}
-          </div>
+          {/* Bottom thumbnail strip — hidden on mobile */}
+          {!m && (
+            <div style={{ position:'absolute', bottom:0, left:0, right:0,
+              display:'grid', gridTemplateColumns:'repeat(3,1fr)', height:108,
+              animation:'slideUp 1s .55s cubic-bezier(.22,1,.36,1) both' }}>
+              {[
+                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/atelier_confection1.jpg', label:'Sewing' },
+                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg', label:'Fabrics' },
+                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg', label:'Quality' },
+              ].map((im,i) => (
+                <div key={i} style={{ position:'relative', overflow:'hidden' }}>
+                  <img src={im.src} alt={im.label} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.55)' }} />
+                  <span style={{ position:'absolute', bottom:10, left:14, fontSize:9.5,
+                    letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,.7)' }}>{im.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       );
     }
 
-    // ── Clients Marquee ───────────────────────────────────────────────────────
+    // ── Marquee ───────────────────────────────────────────────────────────────
     function ClientsMarquee() {
       const brands = ['Petit Bateau','Jacadi','Etam','Princesse Tam Tam','Obaibi','Truworths','Natalys',
                       'Petit Bateau','Jacadi','Etam','Princesse Tam Tam','Obaibi','Truworths','Natalys'];
       return (
-        <div className="at-marquee" style={{ borderTop:'1px solid var(--border)', borderBottom:'1px solid var(--border)',
-          padding:'18px 0', overflow:'hidden', background:'white' }}>
+        <div style={{ borderTop:'1px solid var(--border)', borderBottom:'1px solid var(--border)',
+          padding:'16px 0', overflow:'hidden', background:'white' }}>
           <div className="marquee-track">
             {brands.map((b,i) => (
-              <div key={i} style={{ display:'flex', alignItems:'center', gap:44, padding:'0 22px' }}>
-                <span style={{ fontFamily:'Cormorant Garamond, serif', fontSize:19, fontWeight:500,
-                  letterSpacing:'0.05em', whiteSpace:'nowrap', color:'var(--dark)', opacity:0.62 }}>{b}</span>
-                {i%7!==6 && <span style={{ width:3, height:3, borderRadius:'50%', background:'var(--amber)', opacity:.45, flexShrink:0 }} />}
+              <div key={i} style={{ display:'flex', alignItems:'center', gap:40, padding:'0 20px' }}>
+                <span style={{ fontFamily:'Cormorant Garamond, serif', fontSize:18, fontWeight:500,
+                  letterSpacing:'0.05em', whiteSpace:'nowrap', color:'var(--dark)', opacity:.6 }}>{b}</span>
+                {i%7!==6 && <span style={{ width:3, height:3, borderRadius:'50%', background:'var(--amber)', opacity:.4, flexShrink:0 }} />}
               </div>
             ))}
           </div>
@@ -152,25 +153,25 @@
       );
     }
 
-    // ── Image Strip ───────────────────────────────────────────────────────────
+    // ── Image strip ───────────────────────────────────────────────────────────
     function ImageStrip() {
-      const imgs = [
-        { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-6.jpeg', label:'Know-how' },
-        { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg', label:'Production' },
-        { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg', label:'Craftsmanship' },
-        { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-3.jpeg', label:'Precision' },
-      ];
+      const m = useMobile();
+      if (m) return null; // skip on mobile
       return (
-        <div className="at-image-strip" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', height:280 }}>
-          {imgs.map((im,i) => (
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', height:260 }}>
+          {[
+            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-6.jpeg', label:'Know-how' },
+            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg', label:'Production' },
+            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg', label:'Craftsmanship' },
+            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-3.jpeg', label:'Precision' },
+          ].map((im,i) => (
             <div key={i} style={{ position:'relative', overflow:'hidden' }}>
               <img src={im.src} alt={im.label} loading="lazy"
-                style={{ width:'100%', height:'100%', objectFit:'cover', transition:'transform .5s ease' }}
-                onMouseEnter={e => e.target.style.transform='scale(1.05)'}
-                onMouseLeave={e => e.target.style.transform='scale(1)'} />
-              <div style={{ position:'absolute', inset:0,
-                background:'linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 55%)' }} />
-              <span style={{ position:'absolute', bottom:14, left:18, fontSize:9.5,
+                style={{ width:'100%', height:'100%', objectFit:'cover', transition:'transform .5s' }}
+                onMouseEnter={e=>e.target.style.transform='scale(1.05)'}
+                onMouseLeave={e=>e.target.style.transform='scale(1)'} />
+              <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(0,0,0,.42) 0%,transparent 55%)' }} />
+              <span style={{ position:'absolute', bottom:12, left:16, fontSize:9.5,
                 letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(255,255,255,.75)' }}>{im.label}</span>
             </div>
           ))}
@@ -180,16 +181,17 @@
 
     // ── App ───────────────────────────────────────────────────────────────────
     function App() {
-      const [lang, setLang]     = useState(() => localStorage.getItem('at-lang') || 'en');
+      const [lang, setLang]         = useState(() => localStorage.getItem('at-lang') || 'en');
       const [scrolled, setScrolled] = useState(false);
-      const [t, setTweak]       = useTweaks(TWEAK_DEFAULTS);
+      const [tw, setTweak]          = useTweaks(TWEAK_DEFAULTS);
+      const isMobile                = useIsMobile();
 
       const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
 
       useEffect(() => {
-        const vars = ACCENT_MAP[t.accentColor] || ACCENT_MAP.amber;
+        const vars = ACCENT_MAP[tw.accentColor] || ACCENT_MAP.amber;
         Object.entries(vars).forEach(([k,v]) => document.documentElement.style.setProperty(k,v));
-      }, [t.accentColor]);
+      }, [tw.accentColor]);
 
       useEffect(() => {
         const fn = () => setScrolled(window.scrollY > 60);
@@ -199,23 +201,25 @@
 
       return (
         <LangCtx.Provider value={lang}>
-          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="home" />
-          <Hero heroStyle={t.heroStyle} lang={lang} />
-          <StatsBar />
-          <ClientsMarquee />
-          <AboutSection />
-          <ImageStrip />
-          <ProductionSection />
-          <SustainabilitySection />
-          <CertificationsSection />
-          <CTABanner />
-          <SharedFooter />
-          <TweaksPanel>
-            <TweakSection label="Accent Color" />
-            <TweakRadio label="Color" value={t.accentColor} options={['amber','indigo','jade']} onChange={v=>setTweak('accentColor',v)} />
-            <TweakSection label="Hero Style" />
-            <TweakRadio label="Mode" value={t.heroStyle} options={['dark','light']} onChange={v=>setTweak('heroStyle',v)} />
-          </TweaksPanel>
+          <MobileCtx.Provider value={isMobile}>
+            <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="home" />
+            <Hero heroStyle={tw.heroStyle} />
+            <StatsBar />
+            <ClientsMarquee />
+            <AboutSection />
+            <ImageStrip />
+            <ProductionSection />
+            <SustainabilitySection />
+            <CertificationsSection />
+            <CTABanner />
+            <SharedFooter />
+            <TweaksPanel>
+              <TweakSection label="Accent Color" />
+              <TweakRadio label="Color" value={tw.accentColor} options={['amber','indigo','jade']} onChange={v=>setTweak('accentColor',v)} />
+              <TweakSection label="Hero Style" />
+              <TweakRadio label="Mode" value={tw.heroStyle} options={['dark','light']} onChange={v=>setTweak('heroStyle',v)} />
+            </TweaksPanel>
+          </MobileCtx.Provider>
         </LangCtx.Provider>
       );
     }

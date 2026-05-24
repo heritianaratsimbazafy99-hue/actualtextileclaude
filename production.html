@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Production — Actual Textiles Madagascar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="at-responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -25,45 +23,51 @@
   <script type="text/babel" src="at-shared.jsx"></script>
   <script type="text/babel">
     const { useState, useEffect } = React;
+    const sp = (m) => `${m?'64px':'110px'} 0`;
+    const pad = (m) => `0 ${m?'20px':'48px'}`;
 
-    // ── Products Section ──────────────────────────────────────────────────────
     function ProductsSection() {
-      const lang = useLang();
-      const products = lang==='fr'
-        ? [
-            { title:'Vêtements enfants', desc:"Notre spécialité historique — des bodies aux vêtements de sport, nous maîtrisons la confection de vêtements enfants dans une grande variété de matières et styles.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/createur_vetements.jpg' },
-            { title:'Mode femme', desc:"Blouses, chemisiers, hauts — nous produisons des pièces féminines avec une attention particulière aux finitions, à la tombe et aux détails de qualité premium.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg' },
-            { title:'Loungewear & Sleepwear', desc:"Pyjamas, nuisettes, tenues détente — nous sommes experts dans les matières douces et les finitions soignées qui caractérisent ce segment.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg' },
-            { title:'Accessoires & Autres', desc:"Notre expertise s'étend à une large gamme d'autres vêtements et accessoires. Contactez-nous pour discuter de votre projet spécifique.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg' },
-          ]
-        : [
-            { title:'Children\'s Clothing', desc:"Our historic speciality — from babywear to sportswear, we master children's garment manufacturing across a wide variety of materials and styles.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/createur_vetements.jpg' },
-            { title:'Women\'s Fashion', desc:"Blouses, shirts, tops — we produce women's pieces with particular attention to finishes, drape, and the details that define premium quality.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg' },
-            { title:'Loungewear & Sleepwear', desc:"Pyjamas, nightgowns, leisure wear — we are experts in soft materials and refined finishes that characterise this segment.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg' },
-            { title:'Accessories & More', desc:"Our expertise extends to a wide range of other garments and accessories. Contact us to discuss your specific project requirements.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg' },
-          ];
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      const products = [
+        { title:isFr?"Vêtements enfants":'Children\'s Clothing',
+          desc:isFr?"Notre spécialité historique — bodies, vêtements de sport et de ville dans une grande variété de matières et styles."
+                  :"Our historic speciality — from babywear to sportswear across a wide variety of materials and styles.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/createur_vetements.jpg' },
+        { title:isFr?'Mode femme':'Women\'s Fashion',
+          desc:isFr?"Blouses, hauts, chemisiers — avec une attention particulière aux finitions et à la tombe premium."
+                  :"Blouses, shirts, tops — with particular attention to finishes, drape, and premium-quality details.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg' },
+        { title:isFr?'Loungewear & Sleepwear':'Loungewear & Sleepwear',
+          desc:isFr?"Pyjamas, nuisettes, tenues détente — experts en matières douces et finitions soignées."
+                  :"Pyjamas, nightgowns, leisure wear — experts in soft materials and refined finishes.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg' },
+        { title:isFr?'Accessoires & Autres':'Accessories & More',
+          desc:isFr?"Notre expertise s'étend à une large gamme d'autres vêtements et accessoires."
+                  :"Our expertise extends to a wide range of garments and accessories.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg' },
+      ];
       return (
-        <section style={{ padding:'110px 0', background:'var(--cream)' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <section style={{ padding:sp(m), background:'var(--cream)' }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
             <Reveal>
-              <Label>{lang==='fr' ? 'Ce que nous fabriquons' : 'What we make'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:60, letterSpacing:'-0.01em', maxWidth:500 }}>
-                {lang==='fr' ? <>Des produits<br /><em>d'exception</em></> : <>Products of<br /><em>distinction</em></>}
+              <Label>{isFr?'Ce que nous fabriquons':'What we make'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?32:56, letterSpacing:'-0.01em' }}>
+                {isFr?<>Des produits<br /><em>d'exception</em></>:<>Products of<br /><em>distinction</em></>}
               </h2>
             </Reveal>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:2 }}>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr 1fr':'repeat(4,1fr)', gap:m?8:2 }}>
               {products.map((p,i) => (
-                <Reveal key={i} delay={i*0.08}>
+                <Reveal key={i} delay={i*.07}>
                   <div style={{ background:'var(--stone)', overflow:'hidden' }}>
-                    <div style={{ position:'relative', overflow:'hidden' }}>
-                      <img src={p.img} alt={p.title} loading="lazy"
-                        style={{ width:'100%', height:240, objectFit:'cover', transition:'transform .5s' }}
-                        onMouseEnter={e=>e.target.style.transform='scale(1.05)'}
-                        onMouseLeave={e=>e.target.style.transform='scale(1)'} />
-                    </div>
-                    <div style={{ padding:'24px 22px 28px' }}>
-                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:22, fontWeight:400, marginBottom:10 }}>{p.title}</h3>
-                      <p style={{ fontSize:13.5, lineHeight:1.72, color:'var(--mid)' }}>{p.desc}</p>
+                    <img src={p.img} alt={p.title} loading="lazy"
+                      style={{ width:'100%', height:m?150:230, objectFit:'cover', transition:'transform .5s' }}
+                      onMouseEnter={e=>e.target.style.transform='scale(1.05)'}
+                      onMouseLeave={e=>e.target.style.transform='scale(1)'} />
+                    <div style={{ padding:m?'14px 12px 18px':'22px 20px 26px' }}>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?17:21,
+                        fontWeight:400, marginBottom:8 }}>{p.title}</h3>
+                      {!m && <p style={{ fontSize:13, lineHeight:1.7, color:'var(--mid)' }}>{p.desc}</p>}
                     </div>
                   </div>
                 </Reveal>
@@ -74,10 +78,8 @@
       );
     }
 
-    // ── Full Process ──────────────────────────────────────────────────────────
     function ProcessSection() {
-      const t = useT(); const lang = useLang();
-      const p = t.production;
+      const t = useT(); const p = t.production; const m = useMobile();
       const [active, setActive] = useState(0);
       const imgs = [
         'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg',
@@ -88,50 +90,53 @@
         'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg',
       ];
       return (
-        <section style={{ background:'var(--stone)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <section style={{ background:'var(--stone)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
             <Reveal>
               <Label>{p.label}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:64, letterSpacing:'-0.01em' }}>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:48,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?28:52, letterSpacing:'-0.01em' }}>
                 {p.title1}<br /><em>{p.titleItalic}</em>
               </h2>
             </Reveal>
-            {/* Timeline */}
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(6,1fr)', gap:2, marginBottom:64 }}>
+            {/* Step selector */}
+            <div style={{ display:'grid', gridTemplateColumns:m?'repeat(3,1fr)':'repeat(6,1fr)', gap:2, marginBottom:m?24:48 }}>
               {p.steps.map((s,i) => (
                 <button key={i} onClick={()=>setActive(i)} style={{
-                  background: active===i ? 'var(--dark)' : 'white', border:'none', cursor:'pointer',
-                  padding:'20px 16px', textAlign:'left', transition:'all .2s',
-                  borderTop: `3px solid ${active===i ? 'var(--amber)' : 'transparent'}`,
-                }}>
-                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:26, fontWeight:300,
-                    color: active===i ? 'var(--amber)' : 'var(--mid)', marginBottom:8 }}>{s.num}</div>
-                  <div style={{ fontSize:12, fontWeight:500, lineHeight:1.4,
-                    color: active===i ? 'white' : 'var(--dark)' }}>{s.title}</div>
+                  background:active===i?'var(--dark)':'white', border:'none', cursor:'pointer',
+                  padding:m?'14px 10px':'18px 14px', textAlign:'left',
+                  borderTop:`3px solid ${active===i?'var(--amber)':'transparent'}`, transition:'all .2s' }}>
+                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?20:26, fontWeight:300,
+                    color:active===i?'var(--amber)':'var(--mid)', marginBottom:6 }}>{s.num}</div>
+                  <div style={{ fontSize:m?11:12, fontWeight:500, lineHeight:1.3,
+                    color:active===i?'white':'var(--dark)' }}>{s.title}</div>
                 </button>
               ))}
             </div>
-            {/* Active detail */}
-            <div key={active} style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:72, alignItems:'center', animation:'fadeIn .4s ease' }}>
+            {/* Detail */}
+            <div key={active} style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr',
+              gap:m?24:64, alignItems:'center', animation:'fadeIn .35s ease' }}>
               <Reveal>
                 <img src={imgs[active]} alt={p.steps[active].title} loading="lazy"
-                  style={{ width:'100%', height:420, objectFit:'cover' }} />
+                  style={{ width:'100%', height:m?220:380, objectFit:'cover' }} />
               </Reveal>
-              <Reveal delay={0.1}>
-                <div style={{ fontSize:10.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--amber)', marginBottom:12 }}>{p.stepLabel} {p.steps[active].num}</div>
-                <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:38, fontWeight:400, marginBottom:20 }}>{p.steps[active].title}</h3>
-                <p style={{ fontSize:16, lineHeight:1.78, color:'var(--mid)', marginBottom:28 }}>{p.steps[active].desc}</p>
-                <div style={{ display:'flex', gap:14 }}>
-                  {active > 0 && (
-                    <button onClick={()=>setActive(a=>a-1)} style={{ background:'none', border:'1px solid var(--border)', padding:'10px 20px', fontSize:11, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', color:'var(--mid)' }}>
-                      ← {lang==='fr' ? 'Précédent' : 'Previous'}
-                    </button>
-                  )}
-                  {active < p.steps.length-1 && (
-                    <button onClick={()=>setActive(a=>a+1)} style={{ background:'var(--dark)', color:'white', border:'none', padding:'10px 20px', fontSize:11, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer' }}>
-                      {lang==='fr' ? 'Suivant' : 'Next'} →
-                    </button>
-                  )}
+              <Reveal delay={m?0:0.1}>
+                <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase',
+                  color:'var(--amber)', marginBottom:10 }}>{p.stepLabel} {p.steps[active].num}</div>
+                <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?26:36,
+                  fontWeight:400, marginBottom:16 }}>{p.steps[active].title}</h3>
+                <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:24 }}>{p.steps[active].desc}</p>
+                <div style={{ display:'flex', gap:12 }}>
+                  {active>0 && <button onClick={()=>setActive(a=>a-1)} style={{ background:'none',
+                    border:'1px solid var(--border)', padding:'10px 18px', fontSize:11,
+                    letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', color:'var(--mid)' }}>
+                    ← {useLang()==='fr'?'Préc.':'Prev'}
+                  </button>}
+                  {active<5 && <button onClick={()=>setActive(a=>a+1)} style={{ background:'var(--dark)',
+                    color:'white', border:'none', padding:'10px 18px', fontSize:11,
+                    letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer' }}>
+                    {useLang()==='fr'?'Suiv.':'Next'} →
+                  </button>}
                 </div>
               </Reveal>
             </div>
@@ -140,37 +145,37 @@
       );
     }
 
-    // ── Technology ────────────────────────────────────────────────────────────
     function TechSection() {
-      const lang = useLang();
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
       return (
-        <section id="technology" style={{ background:'var(--dark)', color:'white', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section id="technology" style={{ background:'var(--dark)', color:'white', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?36:96, alignItems:'center' }}>
             <Reveal>
               <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-5.jpg" alt="Technology" loading="lazy"
-                style={{ width:'100%', height:500, objectFit:'cover' }} />
+                style={{ width:'100%', height:m?240:480, objectFit:'cover' }} />
             </Reveal>
-            <Reveal delay={0.15}>
-              <Label color="rgba(255,255,255,0.4)">{lang==='fr' ? 'Technologie & innovation' : 'Technology & innovation'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Précision<br /><em>à la pointe</em></> : <>Precision<br /><em>at the cutting edge</em></>}
+            <Reveal delay={m?0:0.14}>
+              <Label color="rgba(255,255,255,.4)">{isFr?'Technologie & innovation':'Technology & innovation'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>Précision<br /><em>à la pointe</em></>:<>Precision<br /><em>at the cutting edge</em></>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.7, marginBottom:28 }}>
-                {lang==='fr'
-                  ? "Nous utilisons le système LECTRA — référence mondiale dans la création de patrons — pour générer des modèles d'une précision millimétrée. Cette technologie garantit la cohérence entre les tailles et réduit le gaspillage de tissu."
-                  : "We use the LECTRA system — the global benchmark in pattern making — to generate models with millimetre-precise accuracy. This technology guarantees consistency across sizes and reduces fabric waste."}
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.72, marginBottom:20 }}>
+                {isFr?"Nous utilisons le système LECTRA — référence mondiale dans la création de patrons — pour générer des modèles d'une précision millimétrée."
+                     :"We use the LECTRA system — the global benchmark in pattern making — to generate models with millimetre-precise accuracy."}
               </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.7, marginBottom:36 }}>
-                {lang==='fr'
-                  ? "Notre parc de machines à coudre couvre une large palette de techniques : chemiserie, assemblage de matières tissées et tricotées, broderie, et bien plus encore — permettant une grande flexibilité dans les styles produits."
-                  : "Our range of sewing machines covers a wide spectrum: shirt craftsmanship, mixed woven and knit construction, embroidery, and more — giving us exceptional flexibility across garment styles."}
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.72, marginBottom:28 }}>
+                {isFr?"Notre parc de machines couvre une large palette de techniques : chemiserie, matières tissées et tricotées, broderie — une grande flexibilité dans les styles produits."
+                     :"Our machines cover a wide spectrum: shirt craftsmanship, woven and knit construction, embroidery — exceptional flexibility across garment styles."}
               </p>
-              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16 }}>
-                {['LECTRA CAD system','AQL 1.0 quality','Mixed materials','100% inspection'].map((item,i) => (
-                  <div key={i} style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-                    <span style={{ color:'var(--amber)', fontSize:18, lineHeight:1.1 }}>◈</span>
-                    <span style={{ fontSize:14, opacity:.75 }}>{item}</span>
+              <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+                {(isFr?['Système LECTRA CAD','Qualité AQL 1.0','Matières mixtes','100% inspection']
+                       :['LECTRA CAD system','AQL 1.0 quality','Mixed materials','100% inspection']
+                ).map((item,i) => (
+                  <div key={i} style={{ display:'flex', gap:10, alignItems:'center' }}>
+                    <span style={{ color:'var(--amber)', fontSize:16 }}>◈</span>
+                    <span style={{ fontSize:13.5, opacity:.75 }}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -180,76 +185,81 @@
       );
     }
 
-    // ── QC Section ────────────────────────────────────────────────────────────
     function QCSection() {
-      const lang = useLang();
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
       return (
-        <section id="qc" style={{ background:'var(--cream)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section id="qc" style={{ background:'var(--cream)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?36:96, alignItems:'center' }}>
             <Reveal>
-              <Label>{lang==='fr' ? 'Contrôle qualité' : 'Quality control'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>AQL 1.0<br /><em>sans compromis</em></> : <>AQL 1.0<br /><em>no compromise</em></>}
+              <Label>{isFr?'Contrôle qualité':'Quality control'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>AQL 1.0<br /><em>sans compromis</em></>:<>AQL 1.0<br /><em>no compromise</em></>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:24 }}>
-                {lang==='fr'
-                  ? "Notre système de contrôle qualité en cours de production est conçu pour livrer des vêtements répondant exactement aux spécifications du client. Chaque lot fait l'objet d'une inspection à 100% avant expédition."
-                  : "Our in-process quality control system is designed to deliver garments that meet exact client specifications. Every production lot undergoes 100% comprehensive inspection before shipment."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:20 }}>
+                {isFr?"Notre système de contrôle en cours de production est conçu pour livrer des vêtements répondant exactement aux spécifications du client. Chaque lot fait l'objet d'une inspection à 100% avant expédition."
+                     :"Our in-process quality control system is designed to deliver garments meeting exact client specifications. Every lot undergoes 100% comprehensive inspection before shipment."}
               </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:36 }}>
-                {lang==='fr'
-                  ? "Nos équipes s'adaptent à tout standard AQL demandé par nos clients, maintenant notre niveau de conformité AQL 1.0 reconnu. Une inspection internationale indépendante peut être demandée."
-                  : "Our teams adapt to any AQL standard requested by clients, maintaining our recognised AQL 1.0 compliance level. Independent international inspection bodies can be engaged on request."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:28 }}>
+                {isFr?"Nos équipes s'adaptent à tout standard AQL demandé, maintenant notre niveau de conformité AQL 1.0. Inspection internationale indépendante disponible sur demande."
+                     :"Our teams adapt to any AQL standard requested, maintaining our recognised AQL 1.0 compliance. Independent international inspection can be engaged on request."}
               </p>
-              <a href="./contact.html" style={{ display:'inline-block', background:'var(--forest)', color:'white', padding:'13px 28px', fontSize:12, fontWeight:500, letterSpacing:'0.1em', textTransform:'uppercase' }}>
-                {lang==='fr' ? 'Demander un devis' : 'Request a quote'}
+              <a href="./contact.html" style={{ display:'inline-block', background:'var(--forest)',
+                color:'white', padding:'13px 28px', fontSize:12, fontWeight:500,
+                letterSpacing:'0.1em', textTransform:'uppercase' }}>
+                {isFr?'Demander un devis':'Request a quote'}
               </a>
             </Reveal>
-            <Reveal delay={0.15}>
-              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg" alt="Quality Control" loading="lazy"
-                style={{ width:'100%', height:520, objectFit:'cover' }} />
+            <Reveal delay={m?0:0.14}>
+              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg"
+                alt="Quality Control" loading="lazy"
+                style={{ width:'100%', height:m?240:500, objectFit:'cover' }} />
             </Reveal>
           </div>
         </section>
       );
     }
 
-    // ── App ───────────────────────────────────────────────────────────────────
     function App() {
       const [lang, setLang]         = useState(() => localStorage.getItem('at-lang') || 'en');
       const [scrolled, setScrolled] = useState(false);
+      const isMobile                = useIsMobile();
+      const isFr = lang === 'fr';
       const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
       useEffect(() => {
-        const fn = () => setScrolled(window.scrollY > 60);
+        const fn = () => setScrolled(window.scrollY > 56);
         window.addEventListener('scroll', fn, { passive:true });
         return () => window.removeEventListener('scroll', fn);
       }, []);
       return (
         <LangCtx.Provider value={lang}>
-          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="production" />
-          <PageHero
-            label={lang==='fr' ? 'Production' : 'Production'}
-            title={lang==='fr' ? "Excellence" : 'Excellence'}
-            titleItalic={lang==='fr' ? "à chaque étape" : 'at every step'}
-            imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg"
-            breadcrumb={lang==='fr' ? 'Accueil → Production' : 'Home → Production'}
-          />
-          <ProductsSection />
-          <ProcessSection />
-          <TechSection />
-          <QCSection />
-          <section style={{ background:'var(--amber)', color:'white', padding:'72px 48px', textAlign:'center' }}>
-            <Reveal>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:42, fontWeight:400, marginBottom:20 }}>
-                {lang==='fr' ? <>Prêts à démarrer <em>votre production ?</em></> : <>Ready to start <em>your production?</em></>}
-              </h2>
-              <a href="./contact.html" style={{ display:'inline-block', background:'white', color:'var(--amber)', padding:'13px 36px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase', marginTop:8 }}>
-                {lang==='fr' ? 'Nous contacter' : 'Get in touch'}
-              </a>
-            </Reveal>
-          </section>
-          <SharedFooter />
+          <MobileCtx.Provider value={isMobile}>
+            <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="production" />
+            <PageHero label="Production"
+              title={isFr?'Excellence':'Excellence'}
+              titleItalic={isFr?'à chaque étape':'at every step'}
+              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg"
+              breadcrumb={isFr?'Accueil → Production':'Home → Production'} />
+            <ProductsSection />
+            <ProcessSection />
+            <TechSection />
+            <QCSection />
+            <section style={{ background:'var(--amber)', color:'white',
+              padding:isMobile?'56px 20px':'72px 48px', textAlign:'center' }}>
+              <Reveal>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:isMobile?30:42, fontWeight:400, marginBottom:18 }}>
+                  {isFr?<>Prêts à démarrer <em>votre production ?</em></>:<>Ready to start <em>your production?</em></>}
+                </h2>
+                <a href="./contact.html" style={{ display:'inline-block', background:'white', color:'var(--amber)',
+                  padding:'13px 36px', fontSize:12, fontWeight:600, letterSpacing:'0.12em',
+                  textTransform:'uppercase', marginTop:8 }}>
+                  {isFr?'Nous contacter':'Get in touch'}
+                </a>
+              </Reveal>
+            </section>
+            <SharedFooter />
+          </MobileCtx.Provider>
         </LangCtx.Provider>
       );
     }

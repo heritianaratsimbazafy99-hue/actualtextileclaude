@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sustainability — Actual Textiles Madagascar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="at-responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -25,50 +23,50 @@
   <script type="text/babel" src="at-shared.jsx"></script>
   <script type="text/babel">
     const { useState, useEffect } = React;
+    const sp = (m) => `${m?'64px':'110px'} 0`;
+    const pad = (m) => `0 ${m?'20px':'48px'}`;
 
-    // ── Environment ───────────────────────────────────────────────────────────
     function EnvironmentSection() {
-      const lang = useLang();
-      const commitments = lang==='fr'
-        ? ['100% énergie solaire — zéro émission carbone opérationnelle','Partenariats de recyclage et upcycling des déchets de production','Espaces verts et potagers collaboratifs sur site','Programmes actifs de reforestation à Madagascar','Réduction continue de l\'empreinte environnementale']
-        : ['100% solar energy — zero operational carbon emissions','Recycling and upcycling partnerships for all production waste','Green spaces and collaborative vegetable gardens on-site','Active reforestation programmes across Madagascar','Continuous reduction of environmental footprint'];
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      const items = isFr
+        ?['100% énergie solaire — zéro émission carbone','Recyclage et upcycling des déchets de production','Espaces verts et potagers collaboratifs sur site','Programmes de reforestation actifs à Madagascar','Réduction continue de l\'empreinte environnementale']
+        :['100% solar energy — zero operational carbon emissions','Recycling & upcycling of all production waste','Green spaces and collaborative vegetable gardens on-site','Active reforestation programmes across Madagascar','Continuous reduction of environmental footprint'];
       return (
-        <section id="environment" style={{ background:'var(--cream)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section id="environment" style={{ background:'var(--cream)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:96, alignItems:'center' }}>
             <Reveal>
               <div style={{ position:'relative' }}>
                 <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Environnement-5.jpg"
-                  alt="Environment" style={{ width:'100%', height:560, objectFit:'cover' }} loading="lazy" />
-                <div style={{ position:'absolute', top:28, left:28, background:'var(--forest)',
-                  color:'white', padding:'16px 22px' }}>
-                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:32, fontWeight:300, lineHeight:1 }}>100%</div>
+                  alt="Environment" style={{ width:'100%', height:m?260:540, objectFit:'cover' }} />
+                <div style={{ position:'absolute', top:m?16:24, left:m?16:24,
+                  background:'var(--forest)', color:'white', padding:m?'12px 16px':'16px 22px' }}>
+                  <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?24:32, fontWeight:300, lineHeight:1 }}>100%</div>
                   <div style={{ fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase', opacity:.75, marginTop:4 }}>
-                    {lang==='fr' ? 'Énergie solaire' : 'Solar Energy'}
+                    {isFr?'Énergie solaire':'Solar Energy'}
                   </div>
                 </div>
               </div>
             </Reveal>
-            <Reveal delay={0.15}>
-              <Label>{lang==='fr' ? 'Environnement' : 'Environment'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Production<br /><em>100% solaire</em></> : <>Powered entirely<br /><em>by the sun</em></>}
+            <Reveal delay={m?0:0.14}>
+              <Label>{isFr?'Environnement':'Environment'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>Production<br /><em>100% solaire</em></>:<>Powered entirely<br /><em>by the sun</em></>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:28 }}>
-                {lang==='fr'
-                  ? "Notre usine fonctionne intégralement à l'énergie solaire, faisant d'Actual Textiles l'un des rares fabricants textiles à pouvoir revendiquer une production sans émissions carbone opérationnelles."
-                  : "Our factory runs entirely on solar power, making Actual Textiles one of the very few garment manufacturers able to claim zero operational carbon emissions from production."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:20 }}>
+                {isFr?"Notre usine fonctionne intégralement à l'énergie solaire, faisant d'Actual Textiles l'un des rares fabricants textiles à pouvoir revendiquer une production sans émissions carbone opérationnelles."
+                     :"Our factory runs entirely on solar power, making Actual Textiles one of the very few garment manufacturers able to claim zero operational carbon emissions."}
               </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:32 }}>
-                {lang==='fr'
-                  ? "Au-delà de l'énergie, nous collaborons activement avec des organisations locales pour recycler nos chutes de tissu, entretenons des jardins communautaires et participons à des programmes de reforestation qui protègent la biodiversité unique de Madagascar."
-                  : "Beyond energy, we actively collaborate with local organisations to recycle fabric offcuts, maintain communal gardens, and participate in reforestation programmes that protect Madagascar's unique biodiversity."}
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:28 }}>
+                {isFr?"Nous collaborons avec des organisations locales pour recycler nos chutes de tissu, entretenons des jardins communautaires et participons à des programmes de reforestation."
+                     :"We collaborate with local organisations to recycle fabric offcuts, maintain communal gardens, and participate in reforestation programmes that protect Madagascar's unique biodiversity."}
               </p>
-              <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-                {commitments.map((c,i) => (
-                  <div key={i} style={{ display:'flex', gap:14, alignItems:'flex-start' }}>
-                    <span style={{ color:'var(--forest)', fontSize:16, lineHeight:1.3, flexShrink:0 }}>◈</span>
-                    <span style={{ fontSize:14.5, lineHeight:1.65, color:'var(--dark)' }}>{c}</span>
+              <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+                {items.map((c,i) => (
+                  <div key={i} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
+                    <span style={{ color:'var(--forest)', fontSize:15, lineHeight:1.3, flexShrink:0 }}>◈</span>
+                    <span style={{ fontSize:14, lineHeight:1.65 }}>{c}</span>
                   </div>
                 ))}
               </div>
@@ -78,164 +76,168 @@
       );
     }
 
-    // ── Health ────────────────────────────────────────────────────────────────
     function HealthSection() {
-      const lang = useLang();
-      const measures = lang==='fr'
-        ? [
-            { title:'Équipe médicale sur site', desc:"Consultations gratuites, soins dentaires, contrôles de la vue et médicaments disponibles pour tous les employés à tout moment.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Assistance-medical.jpg' },
-            { title:'Premiers secours', desc:"Des secouristes formés sont présents dans chaque département, avec une formation annuelle dispensée par notre équipe médicale.", img:'https://www.actualtextiles.com/wp-content/uploads/2022/07/Vaccination-Textile-Madagascar.jpg' },
-            { title:'Hygiène & propreté', desc:"Nos locaux sont nettoyés quotidiennement par une équipe dédiée et désinfectés régulièrement. Des interventions mensuelles anti-nuisibles garantissent un environnement sain.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Eau-potable.jpg' },
-            { title:'Ateliers santé', desc:"Notre équipe organise des ateliers éducatifs sur la nutrition, la prévention des maladies, les soins dentaires et l'importance de l'eau potable.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Sociale-chez-Actual-textiles.jpg' },
-          ]
-        : [
-            { title:'On-site medical team', desc:"Free consultations, dental care, vision check-ups and medications available to all employees at any time.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Assistance-medical.jpg' },
-            { title:'First aid in every dept.', desc:"Trained first-aid personnel are present in every department, with annual training provided by our on-site medical team.", img:'https://www.actualtextiles.com/wp-content/uploads/2022/07/Vaccination-Textile-Madagascar.jpg' },
-            { title:'Hygiene & cleanliness', desc:"Our facilities are cleaned daily by a dedicated team and regularly sanitised. Monthly professional pest control ensures a healthy environment.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Eau-potable.jpg' },
-            { title:'Health workshops', desc:"Our team organises educational workshops on nutrition, disease prevention, dental care and the importance of clean drinking water.", img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Sociale-chez-Actual-textiles.jpg' },
-          ];
-      return (
-        <section id="health" style={{ background:'var(--stone)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-            <Reveal>
-              <Label>{lang==='fr' ? 'Santé & sécurité' : 'Health & Safety'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:60, letterSpacing:'-0.01em', maxWidth:480 }}>
-                {lang==='fr' ? <>Le bien-être<br /><em>avant tout</em></> : <>Well-being<br /><em>above all</em></>}
-              </h2>
-            </Reveal>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:2 }}>
-              {measures.map((m,i) => (
-                <Reveal key={i} delay={i*0.08}>
-                  <div style={{ background:'white', overflow:'hidden' }}>
-                    <img src={m.img} alt={m.title} loading="lazy"
-                      style={{ width:'100%', height:200, objectFit:'cover', objectPosition:'center 20%' }} />
-                    <div style={{ padding:'22px 20px 26px' }}>
-                      <div style={{ fontSize:10, letterSpacing:'0.16em', textTransform:'uppercase', color:'var(--forest)', marginBottom:8 }}>0{i+1}</div>
-                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:20, fontWeight:400, marginBottom:10 }}>{m.title}</h3>
-                      <p style={{ fontSize:13.5, lineHeight:1.7, color:'var(--mid)' }}>{m.desc}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    // ── Social ────────────────────────────────────────────────────────────────
-    function SocialSection() {
-      const lang = useLang();
-      return (
-        <section id="social" style={{ background:'var(--forest)', color:'white', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
-            <Reveal>
-              <Label color="rgba(255,255,255,0.45)">{lang==='fr' ? 'Impact social' : 'Social impact'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Investir<br /><em>dans les gens</em></> : <>Investing<br /><em>in people</em></>}
-              </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.75, marginBottom:24 }}>
-                {lang==='fr'
-                  ? "Nous croyons que la responsabilité sociale n'est pas optionnelle — c'est une obligation envers notre communauté, nos employés et l'avenir de Madagascar. Nous défendons les pratiques du commerce équitable et investissons activement dans le développement local."
-                  : "We believe social responsibility is not optional — it is an obligation towards our community, our employees, and the future of Madagascar. We champion fair trade practices and actively invest in local development."}
-              </p>
-              <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.75, marginBottom:32 }}>
-                {lang==='fr'
-                  ? "Du soutien aux femmes entrepreneures lors du Forum mondial à Antananarivo, aux campagnes de sensibilisation à la biodiversité — notre engagement envers la société malgache est profond et durable."
-                  : "From supporting women entrepreneurs at the World Forum in Antananarivo to organising biodiversity awareness campaigns — our commitment to Malagasy society is deep and lasting."}
-              </p>
-              <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-                {(lang==='fr'
-                  ? ['Commerce équitable & pratiques responsables','Soutien aux femmes entrepreneures malgaches','Programmes de sensibilisation à la biodiversité','Journée mondiale du travail — santé et bien-être','Partenariats avec les communautés locales']
-                  : ['Fair trade & responsible business practices','Support for Malagasy women entrepreneurs','Biodiversity awareness campaigns & programmes','World Day for Safety & Health at Work events','Partnerships with local communities']
-                ).map((item,i) => (
-                  <div key={i} style={{ display:'flex', gap:14, alignItems:'flex-start' }}>
-                    <span style={{ color:'var(--amber)', fontSize:16 }}>◈</span>
-                    <span style={{ fontSize:14.5, opacity:.8 }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-            <Reveal delay={0.15}>
-              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/12/projet_sociaux.jpg" alt="Social projects" loading="lazy"
-                style={{ width:'100%', height:560, objectFit:'cover' }} />
-            </Reveal>
-          </div>
-        </section>
-      );
-    }
-
-    // ── Certifications ────────────────────────────────────────────────────────
-    const certDetails = [
-      { name:'GOTS', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/LOGO-GOTS-A-JOUR-1024x1015.png',
-        en:"The world's leading processing standard for a sustainable production chain — requiring at least 70% organic fibers and high ecological & social criteria throughout.",
-        fr:"La norme de traitement de référence mondiale pour une chaîne de production durable — exigeant au moins 70% de fibres biologiques et des critères écologiques et sociaux élevés." },
-      { name:'OCS — Ecocert EGL 222606', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Organic-100.png',
-        en:"Certified by Ecocert, OCS 100 ensures at least 95% organic material content throughout the supply chain, from farmer to finished garment.",
-        fr:"Certifié par Ecocert, OCS 100 garantit au moins 95% de matières organiques tout au long de la chaîne d'approvisionnement, du producteur au vêtement fini." },
-      { name:'WRAP', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/wrap_logo.jpg',
-        en:"Worldwide Responsible Accredited Production — certifying ethical, humane, lawful and safe manufacturing in compliance with local laws and workplace regulations.",
-        fr:"Production mondialement accréditée et responsable — certifiant une fabrication éthique, humaine, légale et sûre en conformité avec les lois locales." },
-      { name:'amfori BSCI', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Business-Social-Compliance.png',
-        en:"Business Social Compliance Initiative — ensuring labour rights, fair wages, safe conditions and ethical treatment throughout our operations.",
-        fr:"Initiative de conformité sociale des entreprises — garantissant les droits des travailleurs, des salaires équitables, des conditions sûres et un traitement éthique." },
-      { name:'SMETA / Sedex', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/SMETA.png',
-        en:"Sedex Members Ethical Trade Audit — one of the most widely used ethical trade auditing methodologies globally, covering labour, health & safety, environment and business ethics.",
-        fr:"Audit de commerce éthique Sedex — l'une des méthodologies d'audit les plus utilisées au monde, couvrant le travail, la santé, l'environnement et l'éthique." },
-      { name:'GSV — Intertek', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Global-security-verification.png',
-        en:"Global Security Verification by Intertek — confirming that our facilities meet rigorous international standards for physical and procedural security.",
-        fr:"Vérification de sécurité mondiale par Intertek — confirmant que nos installations répondent aux normes internationales rigoureuses en matière de sécurité." },
-    ];
-
-    function CertificationsFullSection() {
-      const lang = useLang();
-      const allCerts = [
-        { name:'ICS', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/ICS.png' },
-        { name:'AGOA', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/agoa_logo.jpg' },
-        { name:'Authorized Disney', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Authorized-Disney.png' },
-        { name:'Lectra', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Lectra.png' },
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      const measures = [
+        { title:isFr?'Équipe médicale sur site':'On-site medical team', num:'01',
+          desc:isFr?"Consultations gratuites, soins dentaires, contrôles de la vue et médicaments pour tous les employés."
+                  :"Free consultations, dental care, vision check-ups and medications for all employees at any time.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Assistance-medical.jpg' },
+        { title:isFr?'Premiers secours':'First aid in every dept.', num:'02',
+          desc:isFr?"Des secouristes formés sont présents dans chaque département, avec une formation annuelle."
+                  :"Trained first-aid personnel present in every department, with annual training by our medical team.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2022/07/Vaccination-Textile-Madagascar.jpg' },
+        { title:isFr?'Hygiène & propreté':'Hygiene & cleanliness', num:'03',
+          desc:isFr?"Nettoyage quotidien, désinfection régulière et interventions mensuelles anti-nuisibles."
+                  :"Daily cleaning, regular sanitisation, and monthly professional pest control ensure a healthy environment.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Eau-potable.jpg' },
+        { title:isFr?'Ateliers santé':'Health workshops', num:'04',
+          desc:isFr?"Ateliers sur la nutrition, la prévention des maladies, les soins dentaires et l'eau potable."
+                  :"Workshops on nutrition, disease prevention, dental care and the importance of clean drinking water.",
+          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Sociale-chez-Actual-textiles.jpg' },
       ];
       return (
-        <section id="certifications" style={{ background:'var(--cream)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+        <section id="health" style={{ background:'var(--stone)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
             <Reveal>
-              <Label>{lang==='fr' ? 'Nos certifications' : 'Our certifications'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:20, letterSpacing:'-0.01em' }}>
-                {lang==='fr' ? <>Une qualité<br /><em>certifiée & vérifiée</em></> : <>Certified<br /><em>&amp; verified quality</em></>}
+              <Label>{isFr?'Santé & sécurité':'Health & Safety'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?32:52, letterSpacing:'-0.01em' }}>
+                {isFr?<>Le bien-être<br /><em>avant tout</em></>:<>Well-being<br /><em>above all</em></>}
               </h2>
-              <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:60, maxWidth:580 }}>
-                {lang==='fr'
-                  ? "Nos certifications sont renouvelées annuellement et reflètent des scores parmi les meilleurs de la région. Elles couvrent l'ensemble de la chaîne de production — des matières premières à l'expédition."
-                  : "Our certifications are renewed annually and reflect consistently top-tier regional scores. They cover the entire production chain — from raw materials to shipment."}
-              </p>
             </Reveal>
-            {/* Detailed certs */}
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:2, marginBottom:2 }}>
-              {certDetails.map((c,i) => (
-                <Reveal key={i} delay={i*0.07}>
-                  <div style={{ background:'var(--stone)', padding:'36px 36px 36px', display:'flex', gap:28, alignItems:'flex-start' }}>
-                    <img src={c.img} alt={c.name} loading="lazy"
-                      style={{ height:56, width:'auto', maxWidth:80, objectFit:'contain', flexShrink:0 }}
-                      onError={e=>{e.target.style.display='none';}} />
-                    <div>
-                      <div style={{ fontSize:12, fontWeight:600, letterSpacing:'0.04em', marginBottom:10 }}>{c.name}</div>
-                      <p style={{ fontSize:14, lineHeight:1.72, color:'var(--mid)' }}>{lang==='fr' ? c.fr : c.en}</p>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr 1fr':'repeat(4,1fr)', gap:m?8:2 }}>
+              {measures.map((mx,i) => (
+                <Reveal key={i} delay={i*.07}>
+                  <div style={{ background:'white', overflow:'hidden' }}>
+                    <img src={mx.img} alt={mx.title} loading="lazy"
+                      style={{ width:'100%', height:m?140:190, objectFit:'cover', objectPosition:'center 20%' }} />
+                    <div style={{ padding:m?'14px 12px 18px':'20px 18px 24px' }}>
+                      <div style={{ fontSize:10, letterSpacing:'0.16em', textTransform:'uppercase',
+                        color:'var(--forest)', marginBottom:6 }}>{mx.num}</div>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?16:19,
+                        fontWeight:400, marginBottom:8, lineHeight:1.2 }}>{mx.title}</h3>
+                      {!m && <p style={{ fontSize:13, lineHeight:1.68, color:'var(--mid)' }}>{mx.desc}</p>}
                     </div>
                   </div>
                 </Reveal>
               ))}
             </div>
-            {/* Additional logos */}
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:2 }}>
-              {allCerts.map((c,i) => (
-                <Reveal key={i} delay={i*0.06}>
-                  <div style={{ background:'white', padding:'28px 20px', display:'flex',
-                    flexDirection:'column', alignItems:'center', gap:12, minHeight:110 }}>
+          </div>
+        </section>
+      );
+    }
+
+    function SocialSection() {
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      const items = isFr
+        ?['Commerce équitable & pratiques responsables','Soutien aux femmes entrepreneures malgaches','Programmes de sensibilisation à la biodiversité','Journées mondiales du travail — santé et bien-être','Partenariats avec les communautés locales']
+        :['Fair trade & responsible business practices','Support for Malagasy women entrepreneurs','Biodiversity awareness campaigns','World Day for Safety & Health at Work events','Partnerships with local communities'];
+      return (
+        <section id="social" style={{ background:'var(--forest)', color:'white', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
+            display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:96, alignItems:'center' }}>
+            <Reveal>
+              <Label color="rgba(255,255,255,.45)">{isFr?'Impact social':'Social impact'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:24, letterSpacing:'-0.01em' }}>
+                {isFr?<>Investir<br /><em>dans les gens</em></>:<>Investing<br /><em>in people</em></>}
+              </h2>
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.75, marginBottom:20 }}>
+                {isFr?"Nous croyons que la responsabilité sociale est une obligation envers notre communauté, nos employés et l'avenir de Madagascar. Nous défendons le commerce équitable et investissons activement dans le développement local."
+                     :"We believe social responsibility is an obligation towards our community, our employees, and the future of Madagascar. We champion fair trade and actively invest in local development."}
+              </p>
+              <p style={{ fontSize:15, lineHeight:1.78, opacity:.75, marginBottom:28 }}>
+                {isFr?"Du soutien aux femmes entrepreneures lors du Forum mondial à Antananarivo aux campagnes de sensibilisation — notre engagement envers la société malgache est profond et durable."
+                     :"From supporting women entrepreneurs at the World Forum in Antananarivo to biodiversity campaigns — our commitment to Malagasy society is deep and lasting."}
+              </p>
+              <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                {items.map((item,i) => (
+                  <div key={i} style={{ display:'flex', gap:12, alignItems:'flex-start' }}>
+                    <span style={{ color:'var(--amber)', fontSize:15, flexShrink:0 }}>◈</span>
+                    <span style={{ fontSize:14, opacity:.8 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+            <Reveal delay={m?0:0.14}>
+              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/12/projet_sociaux.jpg"
+                alt="Social projects" loading="lazy"
+                style={{ width:'100%', height:m?260:540, objectFit:'cover' }} />
+            </Reveal>
+          </div>
+        </section>
+      );
+    }
+
+    const CERT_DETAILS = [
+      { name:'GOTS', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/LOGO-GOTS-A-JOUR-1024x1015.png',
+        en:"World's leading standard for sustainable textile chain — at least 70% organic fibers and high ecological & social criteria.",
+        fr:"Norme de référence mondiale pour une chaîne durable — au moins 70% de fibres biologiques et critères sociaux élevés." },
+      { name:'OCS — Ecocert', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Organic-100.png',
+        en:"Ensures at least 95% organic material content throughout the supply chain, certified by Ecocert.",
+        fr:"Garantit au moins 95% de matières organiques tout au long de la chaîne, certifié par Ecocert." },
+      { name:'WRAP', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/wrap_logo.jpg',
+        en:"Certifying ethical, humane, lawful and safe manufacturing in compliance with local laws and regulations.",
+        fr:"Certifie une fabrication éthique, humaine, légale et sûre en conformité avec les lois locales." },
+      { name:'amfori BSCI', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Business-Social-Compliance.png',
+        en:"Ensuring labour rights, fair wages, safe conditions and ethical treatment throughout our operations.",
+        fr:"Garantit les droits des travailleurs, des salaires équitables, des conditions sûres et un traitement éthique." },
+      { name:'SMETA / Sedex', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/SMETA.png',
+        en:"Most widely used ethical trade audit — covering labour, health & safety, environment and business ethics.",
+        fr:"Méthode d'audit la plus utilisée — couvrant le travail, la santé, l'environnement et l'éthique." },
+      { name:'GSV — Intertek', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Global-security-verification.png',
+        en:"Confirming that our facilities meet rigorous international standards for physical and procedural security.",
+        fr:"Confirme que nos installations répondent aux standards rigoureux de sécurité physique et procédurale." },
+    ];
+    const CERT_LOGOS = [
+      { name:'ICS', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/ICS.png' },
+      { name:'AGOA', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/agoa_logo.jpg' },
+      { name:'Authorized Disney', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Authorized-Disney.png' },
+      { name:'Lectra', img:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Lectra.png' },
+    ];
+
+    function CertificationsSection() {
+      const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
+      return (
+        <section id="certifications" style={{ background:'var(--cream)', padding:sp(m) }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m) }}>
+            <Reveal>
+              <Label>{isFr?'Nos certifications':'Our certifications'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?30:46,
+                fontWeight:400, lineHeight:1.08, marginBottom:m?16:20, letterSpacing:'-0.01em' }}>
+                {isFr?<>Qualité<br /><em>certifiée & vérifiée</em></>:<>Certified<br /><em>&amp; verified quality</em></>}
+              </h2>
+              <p style={{ fontSize:15, lineHeight:1.78, color:'var(--mid)', marginBottom:m?32:52, maxWidth:540 }}>
+                {isFr?"Nos certifications sont renouvelées annuellement avec des scores parmi les meilleurs de la région, couvrant toute la chaîne de production."
+                     :"Our certifications are renewed annually with consistently top-tier regional scores, covering the entire production chain."}
+              </p>
+            </Reveal>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:2, marginBottom:2 }}>
+              {CERT_DETAILS.map((c,i) => (
+                <Reveal key={i} delay={i*.06}>
+                  <div style={{ background:'var(--stone)', padding:m?'20px 16px':32,
+                    display:'flex', gap:m?16:24, alignItems:'flex-start' }}>
                     <img src={c.img} alt={c.name} loading="lazy"
-                      style={{ height:44, width:'auto', maxWidth:80, objectFit:'contain' }}
+                      style={{ height:m?40:52, width:'auto', maxWidth:m?64:80, objectFit:'contain', flexShrink:0 }}
                       onError={e=>{e.target.style.display='none';}} />
-                    <span style={{ fontSize:10, letterSpacing:'0.14em', textTransform:'uppercase',
+                    <div>
+                      <div style={{ fontSize:12, fontWeight:600, letterSpacing:'0.04em', marginBottom:8 }}>{c.name}</div>
+                      <p style={{ fontSize:m?12.5:13.5, lineHeight:1.7, color:'var(--mid)' }}>{isFr?c.fr:c.en}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr 1fr':'repeat(4,1fr)', gap:2 }}>
+              {CERT_LOGOS.map((c,i) => (
+                <Reveal key={i} delay={i*.05}>
+                  <div style={{ background:'white', padding:m?'20px 16px':'26px 20px',
+                    display:'flex', flexDirection:'column', alignItems:'center', gap:10, minHeight:m?90:108 }}>
+                    <img src={c.img} alt={c.name} loading="lazy"
+                      style={{ height:m?36:44, width:'auto', maxWidth:m?70:80, objectFit:'contain' }}
+                      onError={e=>{e.target.style.display='none';}} />
+                    <span style={{ fontSize:9.5, letterSpacing:'0.13em', textTransform:'uppercase',
                       color:'var(--mid)', textAlign:'center' }}>{c.name}</span>
                   </div>
                 </Reveal>
@@ -246,41 +248,46 @@
       );
     }
 
-    // ── App ───────────────────────────────────────────────────────────────────
     function App() {
       const [lang, setLang]         = useState(() => localStorage.getItem('at-lang') || 'en');
       const [scrolled, setScrolled] = useState(false);
+      const isMobile                = useIsMobile();
+      const isFr = lang === 'fr';
       const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
       useEffect(() => {
-        const fn = () => setScrolled(window.scrollY > 60);
+        const fn = () => setScrolled(window.scrollY > 56);
         window.addEventListener('scroll', fn, { passive:true });
         return () => window.removeEventListener('scroll', fn);
       }, []);
       return (
         <LangCtx.Provider value={lang}>
-          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="sustainability" />
-          <PageHero
-            label={lang==='fr' ? 'Durabilité' : 'Sustainability'}
-            title={lang==='fr' ? "Responsable" : 'Responsible'}
-            titleItalic={lang==='fr' ? "par nature" : 'by design'}
-            imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/Environnement-5.jpg"
-            breadcrumb={lang==='fr' ? 'Accueil → Durabilité' : 'Home → Sustainability'}
-          />
-          <EnvironmentSection />
-          <HealthSection />
-          <SocialSection />
-          <CertificationsFullSection />
-          <section style={{ background:'var(--forest)', color:'white', padding:'72px 48px', textAlign:'center' }}>
-            <Reveal>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:40, fontWeight:400, marginBottom:16 }}>
-                {lang==='fr' ? <>Nos certifications complètes<br /><em>sont disponibles sur demande</em></> : <>Our full certification documentation<br /><em>is available on request</em></>}
-              </h2>
-              <a href="./contact.html" style={{ display:'inline-block', border:'1px solid rgba(255,255,255,.45)', color:'white', padding:'13px 36px', fontSize:12, fontWeight:500, letterSpacing:'0.12em', textTransform:'uppercase', marginTop:12 }}>
-                {lang==='fr' ? 'Nous contacter' : 'Contact us'}
-              </a>
-            </Reveal>
-          </section>
-          <SharedFooter />
+          <MobileCtx.Provider value={isMobile}>
+            <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="sustainability" />
+            <PageHero label={isFr?'Durabilité':'Sustainability'}
+              title={isFr?'Responsable':'Responsible'}
+              titleItalic={isFr?'par nature':'by design'}
+              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/Environnement-5.jpg"
+              breadcrumb={isFr?'Accueil → Durabilité':'Home → Sustainability'} />
+            <EnvironmentSection />
+            <HealthSection />
+            <SocialSection />
+            <CertificationsSection />
+            <section style={{ background:'var(--forest)', color:'white',
+              padding:isMobile?'56px 20px':'72px 48px', textAlign:'center' }}>
+              <Reveal>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:isMobile?28:38, fontWeight:400, marginBottom:14, lineHeight:1.2 }}>
+                  {isFr?<>Documentation complète<br /><em>disponible sur demande</em></>:<>Full certification docs<br /><em>available on request</em></>}
+                </h2>
+                <a href="./contact.html" style={{ display:'inline-block',
+                  border:'1px solid rgba(255,255,255,.42)', color:'white',
+                  padding:'12px 32px', fontSize:12, fontWeight:500,
+                  letterSpacing:'0.12em', textTransform:'uppercase', marginTop:12 }}>
+                  {isFr?'Nous contacter':'Contact us'}
+                </a>
+              </Reveal>
+            </section>
+            <SharedFooter />
+          </MobileCtx.Provider>
         </LangCtx.Provider>
       );
     }

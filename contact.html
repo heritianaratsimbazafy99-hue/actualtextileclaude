@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Actual Textiles Madagascar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="at-responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -17,6 +16,9 @@
     body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
     img{max-width:100%;display:block} a{text-decoration:none;color:inherit} button{font-family:inherit}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+    input,textarea,select{font-family:'DM Sans',sans-serif}
+    input:focus,textarea:focus,select:focus{outline:2px solid var(--amber);outline-offset:0}
   </style>
 </head>
 <body>
@@ -24,159 +26,326 @@
   <script type="text/babel" src="at-i18n.jsx"></script>
   <script type="text/babel" src="at-shared.jsx"></script>
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
 
-    function ContactIntro() {
-      const lang = useLang();
-      const cards = lang === 'fr'
-        ? [
-            { k:'Email', v:'info@actualtextiles.com', href:'mailto:info@actualtextiles.com' },
-            { k:'Téléphone', v:'+261 20 23 277 66', href:'tel:+261202327766' },
-            { k:'Adresse', v:'Ambohipanja Ilafy, Tana 103, Antananarivo', href:'https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar' },
-          ]
-        : [
-            { k:'Email', v:'info@actualtextiles.com', href:'mailto:info@actualtextiles.com' },
-            { k:'Phone', v:'+261 20 23 277 66', href:'tel:+261202327766' },
-            { k:'Address', v:'Ambohipanja Ilafy, Tana 103, Antananarivo', href:'https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar' },
-          ];
+    // ── Starting Points ───────────────────────────────────────────────────────
+    function StartingPoints({ selected, onSelect, formRef }) {
+      const t = useT(); const c = t.contact; const m = useMobile();
+      const handleClick = (i) => {
+        onSelect(i);
+        if (formRef.current) {
+          const top = formRef.current.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior:'smooth' });
+        }
+      };
       return (
-        <section style={{ padding:'110px 0', background:'var(--cream)' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
-            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+        <section style={{ background:'var(--stone)', padding:`${m?'64px':'100px'} 0` }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${m?'20px':'48px'}` }}>
             <Reveal>
-              <div>
-                <Label>{lang==='fr' ? 'Entrer en relation' : 'Start a conversation'}</Label>
-                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
-                  {lang==='fr' ? <>Parlez-nous<br /><em>de votre</em><br />collection</> : <>Tell us<br /><em>about your</em><br />collection</>}
+              <div style={{ marginBottom:m?36:56, textAlign:m?'left':'center' }}>
+                <Label color="var(--amber)">{c.startLabel}</Label>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?34:50,
+                  fontWeight:400, lineHeight:1.08, letterSpacing:'-0.01em' }}>
+                  {c.startSub}
                 </h2>
-                <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:18 }}>
-                  {lang==='fr'
-                    ? "Pour une demande de production, d'échantillonnage ou de partenariat, partagez les premières informations sur votre projet. L'équipe Actual Textiles vous orientera vers le bon interlocuteur."
-                    : "For production, sampling, or partnership enquiries, share the first details of your project. The Actual Textiles team will route you to the right contact."}
-                </p>
-                <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:34 }}>
-                  {lang==='fr'
-                    ? "Indiquez idéalement le type de vêtement, les volumes estimés, les marchés concernés, les délais et les exigences qualité ou certification."
-                    : "When possible, include garment type, estimated volumes, target markets, timing, and any quality or certification requirements."}
-                </p>
-                <a href="mailto:info@actualtextiles.com?subject=Production%20enquiry%20-%20Actual%20Textiles"
-                  style={{ display:'inline-block', background:'var(--dark)', color:'white', padding:'14px 32px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>
-                  {lang==='fr' ? 'Envoyer un brief' : 'Send a brief'}
-                </a>
               </div>
             </Reveal>
-            <Reveal delay={0.15}>
-              <div style={{ display:'grid', gap:2 }}>
-                {cards.map((card, i) => (
-                  <a key={card.k} href={card.href} target={card.k === 'Address' || card.k === 'Adresse' ? '_blank' : undefined}
-                    rel={card.k === 'Address' || card.k === 'Adresse' ? 'noreferrer' : undefined}
-                    style={{ background:'white', padding:'30px 34px', display:'grid', gridTemplateColumns:'72px 1fr', gap:22, alignItems:'center', borderLeft:`3px solid ${i === 0 ? 'var(--amber)' : 'transparent'}` }}>
-                    <span style={{ fontFamily:'Cormorant Garamond, serif', fontSize:36, fontWeight:300, color:'var(--amber)', lineHeight:1 }}>0{i+1}</span>
-                    <span>
-                      <span style={{ display:'block', fontSize:10.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mid)', marginBottom:8 }}>{card.k}</span>
-                      <span style={{ display:'block', fontSize:17, lineHeight:1.45, color:'var(--dark)' }}>{card.v}</span>
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
-      );
-    }
-
-    function ContactDetails() {
-      const lang = useLang();
-      const details = lang === 'fr'
-        ? [
-            { title:'Production & sampling', body:'Développement produit, prototypes, SMS, productions complètes et exigences de qualité.' },
-            { title:'Certifications', body:'Demandes liées aux audits, standards sociaux, matières organiques et documentation qualité.' },
-            { title:'Logistique', body:'Questions FOB, CIF, LDP, fret aérien, marchés d’exportation et documents EUR1.' },
-          ]
-        : [
-            { title:'Production & sampling', body:'Product development, prototypes, SMS, full production runs, and quality requirements.' },
-            { title:'Certifications', body:'Audit, social compliance, organic materials, and quality documentation enquiries.' },
-            { title:'Logistics', body:'FOB, CIF, LDP, air freight, export markets, and EUR1 documentation questions.' },
-          ];
-      return (
-        <section style={{ background:'var(--stone)', padding:'110px 0' }}>
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
-            <Reveal>
-              <Label>{lang==='fr' ? 'Pour accélérer la réponse' : 'To speed up the reply'}</Label>
-              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:58, letterSpacing:'-0.01em', maxWidth:620 }}>
-                {lang==='fr' ? <>Choisissez le bon<br /><em>point de départ</em></> : <>Choose the right<br /><em>starting point</em></>}
-              </h2>
-            </Reveal>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:2 }}>
-              {details.map((item, i) => (
-                <Reveal key={item.title} delay={i * 0.08}>
-                  <div style={{ background:'white', padding:'34px 30px', minHeight:230 }}>
-                    <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--amber)', marginBottom:16 }}>0{i+1}</div>
-                    <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:27, fontWeight:400, lineHeight:1.14, marginBottom:16 }}>{item.title}</h3>
-                    <p style={{ fontSize:14.5, lineHeight:1.72, color:'var(--mid)' }}>{item.body}</p>
-                  </div>
-                </Reveal>
-              ))}
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'repeat(3,1fr)', gap:m?12:3 }}>
+              {c.starts.map((s,i) => {
+                const active = selected === i;
+                return (
+                  <Reveal key={i} delay={i*.08}>
+                    <button onClick={()=>handleClick(i)} style={{
+                      background:active?'var(--dark)':'white', border:'none',
+                      cursor:'pointer', textAlign:'left', padding:m?'24px 20px':'32px 28px',
+                      borderTop:`3px solid ${active?'var(--amber)':'transparent'}`,
+                      transition:'all .25s', width:'100%',
+                      boxShadow:active?'0 8px 32px rgba(0,0,0,.12)':'none',
+                    }}>
+                      <div style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:42,
+                        fontWeight:300, color:active?'var(--amber)':'var(--border)',
+                        lineHeight:1, marginBottom:16, transition:'color .25s' }}>{s.num}</div>
+                      <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?20:24,
+                        fontWeight:400, marginBottom:12, lineHeight:1.2,
+                        color:active?'white':'var(--dark)', transition:'color .25s' }}>{s.title}</h3>
+                      <p style={{ fontSize:13.5, lineHeight:1.7,
+                        color:active?'rgba(255,255,255,.68)':'var(--mid)', transition:'color .25s' }}>{s.desc}</p>
+                      <div style={{ marginTop:20, fontSize:11, fontWeight:500,
+                        letterSpacing:'0.1em', textTransform:'uppercase',
+                        color:active?'var(--amber)':'var(--mid)', display:'flex', alignItems:'center', gap:6 }}>
+                        {useLang()==='fr'?'Sélectionner':'Select'}
+                        <span>{active?'✓':'→'}</span>
+                      </div>
+                    </button>
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>
       );
     }
 
-    function ContactMapBand() {
-      const lang = useLang();
+    // ── Contact Form ──────────────────────────────────────────────────────────
+    function ContactSection({ selected, formRef }) {
+      const t = useT(); const c = t.contact; const m = useMobile(); const lang = useLang();
+      const [form, setForm] = useState({ name:'', email:'', company:'', subject:'', message:'' });
+      const [errors, setErrors] = useState({});
+      const [status, setStatus] = useState('idle'); // idle | loading | success
+
+      useEffect(() => {
+        if (selected !== null && c.starts[selected]) {
+          setForm(f => ({ ...f, subject: c.starts[selected].title }));
+        }
+      }, [selected, lang]);
+
+      const set = (k) => (e) => { setForm(f => ({ ...f, [k]:e.target.value })); setErrors(er => ({ ...er, [k]:'' })); };
+
+      const validate = () => {
+        const e = {};
+        if (!form.name.trim()) e.name = lang==='fr'?'Requis':'Required';
+        if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = lang==='fr'?'E-mail invalide':'Invalid email';
+        if (!form.message.trim()) e.message = lang==='fr'?'Requis':'Required';
+        return e;
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const errs = validate();
+        if (Object.keys(errs).length) { setErrors(errs); return; }
+        setStatus('loading');
+        setTimeout(() => setStatus('success'), 1600);
+      };
+
+      const inputStyle = (err) => ({
+        width:'100%', padding:'13px 16px', border:`1px solid ${err?'var(--amber)':_err?'var(--border)':'var(--border)'}`,
+        borderColor: err ? 'var(--amber)' : 'var(--border)',
+        fontSize:14, background:'white', color:'var(--dark)', transition:'border-color .2s',
+      });
+      const _err = false;
+
+      const infoItems = [
+        { icon:'◎', label:lang==='fr'?'Adresse':'Address', value:'Ambohipanja Ilafy, Tana 103\nAntananarivo, Madagascar' },
+        { icon:'◎', label:'Email', value:'info@actualtextiles.com', href:'mailto:info@actualtextiles.com' },
+        { icon:'◎', label:lang==='fr'?'Téléphone':'Phone', value:'+261 20 23 277 66', href:'tel:+261202327766' },
+        { icon:'◎', label:lang==='fr'?'Horaires':'Office hours', value:lang==='fr'?'Lun–Ven, 08h–17h (EAT)':'Mon–Fri, 08:00–17:00 (EAT)' },
+      ];
+
       return (
-        <section className="at-contact-map" style={{ background:'var(--forest)', color:'white', padding:'0' }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', minHeight:460 }}>
-            <div className="at-contact-map-copy" style={{ padding:'88px 48px', maxWidth:640, justifySelf:'end' }}>
-              <Reveal>
-                <Label color="rgba(255,255,255,0.48)">{lang==='fr' ? 'Localisation' : 'Location'}</Label>
-                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:24 }}>
-                  {lang==='fr' ? <>Antananarivo,<br /><em>Madagascar</em></> : <>Antananarivo,<br /><em>Madagascar</em></>}
-                </h2>
-                <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.76, marginBottom:30 }}>
-                  {lang==='fr'
-                    ? "Notre usine est implantée en zone franche, à proximité des équipes de développement, production, contrôle qualité et logistique."
-                    : "Our factory is located in a free zone, close to the development, production, quality control, and logistics teams."}
-                </p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar"
-                  target="_blank" rel="noreferrer"
-                  style={{ display:'inline-block', border:'1px solid rgba(255,255,255,.45)', color:'white', padding:'13px 32px', fontSize:12, fontWeight:500, letterSpacing:'0.12em', textTransform:'uppercase' }}>
-                  {lang==='fr' ? 'Ouvrir la carte' : 'Open map'}
-                </a>
+        <section ref={formRef} style={{ padding:`${m?'64px':'100px'} 0`, background:'var(--cream)' }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${m?'20px':'48px'}` }}>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 380px', gap:m?48:72, alignItems:'start' }}>
+
+              {/* Form */}
+              <div>
+                <Reveal>
+                  <Label>{c.formLabel}</Label>
+                  <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?32:46,
+                    fontWeight:400, lineHeight:1.08, marginBottom:36, letterSpacing:'-0.01em' }}>
+                    {lang==='fr'?<>Parlons de<br /><em>votre projet</em></>:<>Tell us about<br /><em>your project</em></>}
+                  </h2>
+                </Reveal>
+
+                {status === 'success' ? (
+                  <div style={{ background:'var(--forest)', color:'white', padding:'48px 40px', animation:'fadeIn .5s ease' }}>
+                    <div style={{ fontSize:32, marginBottom:12 }}>✓</div>
+                    <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:28, fontWeight:400, marginBottom:12 }}>{c.successTitle}</h3>
+                    <p style={{ fontSize:15, opacity:.8, lineHeight:1.7 }}>{c.successBody}</p>
+                    <button onClick={()=>{setStatus('idle');setForm({name:'',email:'',company:'',subject:'',message:''});}}
+                      style={{ marginTop:24, background:'none', border:'1px solid rgba(255,255,255,.4)', color:'white',
+                        padding:'10px 20px', fontSize:11, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer' }}>
+                      {lang==='fr'?'Nouveau message':'New message'}
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} noValidate>
+                    <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?12:16, marginBottom:m?12:16 }}>
+                      <div>
+                        <input type="text" placeholder={c.namePh} value={form.name} onChange={set('name')}
+                          style={inputStyle(errors.name)} />
+                        {errors.name && <div style={{ fontSize:11, color:'var(--amber)', marginTop:4 }}>{errors.name}</div>}
+                      </div>
+                      <div>
+                        <input type="email" placeholder={c.emailPh} value={form.email} onChange={set('email')}
+                          style={inputStyle(errors.email)} />
+                        {errors.email && <div style={{ fontSize:11, color:'var(--amber)', marginTop:4 }}>{errors.email}</div>}
+                      </div>
+                    </div>
+                    <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?12:16, marginBottom:m?12:16 }}>
+                      <input type="text" placeholder={c.companyPh} value={form.company} onChange={set('company')}
+                        style={inputStyle(false)} />
+                      <div style={{ position:'relative' }}>
+                        <select value={form.subject} onChange={set('subject')}
+                          style={{ ...inputStyle(false), appearance:'none', cursor:'pointer',
+                            color: form.subject ? 'var(--dark)' : 'var(--mid)' }}>
+                          <option value="">{c.subjectLabel}</option>
+                          {c.subjectOpts.map(o => <option key={o} value={o}>{o}</option>)}
+                        </select>
+                        <span style={{ position:'absolute', right:14, top:'50%', transform:'translateY(-50%)',
+                          pointerEvents:'none', fontSize:10, color:'var(--mid)' }}>▾</span>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom:m?12:16 }}>
+                      <textarea placeholder={c.messagePh} value={form.message} onChange={set('message')} rows={6}
+                        style={{ ...inputStyle(errors.message), resize:'vertical', lineHeight:1.65 }} />
+                      {errors.message && <div style={{ fontSize:11, color:'var(--amber)', marginTop:4 }}>{errors.message}</div>}
+                    </div>
+                    <div style={{ display:'flex', alignItems:'center', gap:20, flexWrap:'wrap' }}>
+                      <button type="submit" disabled={status==='loading'} style={{
+                        background:'var(--dark)', color:'white', border:'none',
+                        padding:'14px 36px', fontSize:12, fontWeight:600, letterSpacing:'0.12em',
+                        textTransform:'uppercase', cursor:status==='loading'?'wait':'pointer',
+                        opacity:status==='loading'?0.7:1, transition:'opacity .2s', flexShrink:0,
+                      }}>
+                        {status==='loading' ? c.sending : c.sendBtn}
+                      </button>
+                      <p style={{ fontSize:12, color:'var(--mid)', lineHeight:1.5 }}>
+                        {lang==='fr'?'Réponse sous 24h • Aucun spam':'Response within 24h • No spam'}
+                      </p>
+                    </div>
+                  </form>
+                )}
+              </div>
+
+              {/* Info sidebar */}
+              <Reveal delay={m?0:0.15}>
+                <div style={{ background:'var(--stone)', padding:m?'32px 24px':'40px 32px' }}>
+                  <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase',
+                    color:'var(--amber)', marginBottom:20 }}>{c.infoLabel}</div>
+                  <div style={{ display:'flex', flexDirection:'column', gap:26 }}>
+                    {infoItems.map((item,i) => (
+                      <div key={i}>
+                        <div style={{ fontSize:10, letterSpacing:'0.14em', textTransform:'uppercase',
+                          color:'var(--mid)', marginBottom:5 }}>{item.label}</div>
+                        {item.href ? (
+                          <a href={item.href} style={{ fontSize:14, lineHeight:1.65, color:'var(--dark)',
+                            borderBottom:'1px solid var(--border)', paddingBottom:1 }}>{item.value}</a>
+                        ) : (
+                          <p style={{ fontSize:14, lineHeight:1.65, color:'var(--dark)', whiteSpace:'pre-line' }}>{item.value}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop:32, paddingTop:28, borderTop:'1px solid var(--border)' }}>
+                    <div style={{ fontSize:10, letterSpacing:'0.14em', textTransform:'uppercase',
+                      color:'var(--mid)', marginBottom:10 }}>
+                      {lang==='fr'?'Avantages commerciaux':'Trade advantages'}
+                    </div>
+                    {['GSP EUR1 SADC','AGOA (duty-free US)','Zone franche ZF'].map(tag => (
+                      <span key={tag} style={{ display:'inline-block', fontSize:11, fontWeight:500,
+                        letterSpacing:'0.06em', background:'white', color:'var(--forest)',
+                        padding:'4px 10px', marginRight:6, marginBottom:6 }}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
               </Reveal>
             </div>
-            <img className="at-contact-map-image" src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
-              alt="Actual Textiles Madagascar" loading="lazy"
-              style={{ width:'100%', height:'100%', minHeight:460, objectFit:'cover', objectPosition:'center 32%', filter:'brightness(.82)' }} />
           </div>
         </section>
       );
     }
 
+    // ── Location Section ──────────────────────────────────────────────────────
+    function LocationSection() {
+      const t = useT(); const c = t.contact; const m = useMobile(); const lang = useLang();
+      const mapsUrl = 'https://www.google.com/maps/search/Actual+Textiles+Zone+Franche+Ambohipanja+Antananarivo+Madagascar/@-18.85,47.55,13z';
+      return (
+        <section style={{ background:'var(--forest)', color:'white', padding:`${m?'64px':'100px'} 0` }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${m?'20px':'48px'}` }}>
+            <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:80, alignItems:'center' }}>
+              <Reveal>
+                <Label color="rgba(255,255,255,.42)">{c.locationLabel}</Label>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:m?38:58,
+                  fontWeight:300, lineHeight:1.04, letterSpacing:'-0.02em', marginBottom:24,
+                  whiteSpace:'pre-line' }}>{c.locationTitle}</h2>
+                <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.7, marginBottom:32, maxWidth:440 }}>{c.locationDesc}</p>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, marginBottom:36 }}>
+                  {[
+                    { k:lang==='fr'?'Adresse':'Address', v:'Ambohipanja Ilafy, Tana 103' },
+                    { k:lang==='fr'?'Zone':'Zone',        v:lang==='fr'?'Zone franche – Antananarivo':'Free Zone – Antananarivo' },
+                    { k:lang==='fr'?'Pays':'Country',     v:'Madagascar' },
+                  ].map(row => (
+                    <div key={row.k} style={{ display:'flex', gap:16 }}>
+                      <span style={{ fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase',
+                        opacity:.45, minWidth:72 }}>{row.k}</span>
+                      <span style={{ fontSize:14.5, opacity:.85 }}>{row.v}</span>
+                    </div>
+                  ))}
+                </div>
+                <a href={mapsUrl} target="_blank" rel="noreferrer" style={{
+                  display:'inline-flex', alignItems:'center', gap:10,
+                  background:'var(--amber)', color:'white',
+                  padding:'14px 28px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase',
+                }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  {c.mapBtn}
+                </a>
+              </Reveal>
+              <Reveal delay={m?0:0.15}>
+                <div style={{ position:'relative', height:m?240:440, overflow:'hidden', background:'rgba(255,255,255,.07)' }}>
+                  <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/fond_actual_textiles_madagascar-min.jpg"
+                    alt="Antananarivo Madagascar" loading="lazy"
+                    style={{ width:'100%', height:'100%', objectFit:'cover', opacity:.45 }} />
+                  {/* Map pin overlay */}
+                  <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column',
+                    alignItems:'center', justifyContent:'center', gap:10 }}>
+                    <div style={{ width:m?48:64, height:m?48:64, borderRadius:'50%', background:'var(--amber)',
+                      display:'flex', alignItems:'center', justifyContent:'center',
+                      boxShadow:'0 0 0 12px rgba(198,135,60,.25)' }}>
+                      <svg width={m?20:26} height={m?20:26} viewBox="0 0 24 24" fill="white">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3" fill="var(--amber)"/>
+                      </svg>
+                    </div>
+                    <div style={{ background:'rgba(0,0,0,.75)', color:'white', padding:'8px 16px',
+                      fontSize:12, fontWeight:500, letterSpacing:'0.06em', textAlign:'center', lineHeight:1.5 }}>
+                      Actual Textiles<br />
+                      <span style={{ fontSize:10, opacity:.7 }}>Antananarivo, Madagascar</span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ── App ───────────────────────────────────────────────────────────────────
     function App() {
-      const [lang, setLang] = useState(() => localStorage.getItem('at-lang') || 'en');
+      const [lang, setLang]         = useState(() => localStorage.getItem('at-lang') || 'en');
       const [scrolled, setScrolled] = useState(false);
+      const [selected, setSelected] = useState(null);
+      const formRef = useRef(null);
+      const isMobile = useIsMobile();
+
       const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
       useEffect(() => {
-        const fn = () => setScrolled(window.scrollY > 60);
+        const fn = () => setScrolled(window.scrollY > 56);
         window.addEventListener('scroll', fn, { passive:true });
         return () => window.removeEventListener('scroll', fn);
       }, []);
+
+      const t = T[lang] || T.en;
+      const c = t.contact;
+
       return (
         <LangCtx.Provider value={lang}>
-          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="contact" />
-          <PageHero
-            label={lang==='fr' ? 'Contact' : 'Contact'}
-            title={lang==='fr' ? 'Nous contacter' : 'Get in touch'}
-            titleItalic={lang==='fr' ? 'avec notre équipe' : 'with our team'}
-            breadcrumb={lang==='fr' ? 'Accueil / Contact' : 'Home / Contact'}
-            imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-6.jpeg"
-          />
-          <ContactIntro />
-          <ContactDetails />
-          <ContactMapBand />
-          <SharedFooter />
+          <MobileCtx.Provider value={isMobile}>
+            <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="contact" />
+            <PageHero
+              label={c.heroLabel}
+              title={c.heroTitle}
+              titleItalic={c.heroItalic}
+              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-1.jpeg"
+              breadcrumb={c.breadcrumb}
+            />
+            <StartingPoints selected={selected} onSelect={setSelected} formRef={formRef} />
+            <ContactSection selected={selected} formRef={formRef} />
+            <LocationSection />
+            <SharedFooter />
+          </MobileCtx.Provider>
         </LangCtx.Provider>
       );
     }
