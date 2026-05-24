@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Actual Textiles Madagascar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="at-responsive.css" />
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--cream:oklch(97% .009 80);--dark:oklch(16% .018 55);--forest:oklch(36% .105 155);--amber:oklch(59% .125 62);--stone:oklch(93% .007 75);--mid:oklch(50% .010 70);--border:oklch(88% .008 75)}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block} a{text-decoration:none;color:inherit} button{font-family:inherit}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="at-i18n.jsx"></script>
+  <script type="text/babel" src="at-shared.jsx"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function ContactIntro() {
+      const lang = useLang();
+      const cards = lang === 'fr'
+        ? [
+            { k:'Email', v:'info@actualtextiles.com', href:'mailto:info@actualtextiles.com' },
+            { k:'Téléphone', v:'+261 20 23 277 66', href:'tel:+261202327766' },
+            { k:'Adresse', v:'Ambohipanja Ilafy, Tana 103, Antananarivo', href:'https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar' },
+          ]
+        : [
+            { k:'Email', v:'info@actualtextiles.com', href:'mailto:info@actualtextiles.com' },
+            { k:'Phone', v:'+261 20 23 277 66', href:'tel:+261202327766' },
+            { k:'Address', v:'Ambohipanja Ilafy, Tana 103, Antananarivo', href:'https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar' },
+          ];
+      return (
+        <section style={{ padding:'110px 0', background:'var(--cream)' }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px',
+            display:'grid', gridTemplateColumns:'1fr 1fr', gap:96, alignItems:'center' }}>
+            <Reveal>
+              <div>
+                <Label>{lang==='fr' ? 'Entrer en relation' : 'Start a conversation'}</Label>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:50, fontWeight:400, lineHeight:1.08, marginBottom:28, letterSpacing:'-0.01em' }}>
+                  {lang==='fr' ? <>Parlez-nous<br /><em>de votre</em><br />collection</> : <>Tell us<br /><em>about your</em><br />collection</>}
+                </h2>
+                <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:18 }}>
+                  {lang==='fr'
+                    ? "Pour une demande de production, d'échantillonnage ou de partenariat, partagez les premières informations sur votre projet. L'équipe Actual Textiles vous orientera vers le bon interlocuteur."
+                    : "For production, sampling, or partnership enquiries, share the first details of your project. The Actual Textiles team will route you to the right contact."}
+                </p>
+                <p style={{ fontSize:15.5, lineHeight:1.78, color:'var(--mid)', marginBottom:34 }}>
+                  {lang==='fr'
+                    ? "Indiquez idéalement le type de vêtement, les volumes estimés, les marchés concernés, les délais et les exigences qualité ou certification."
+                    : "When possible, include garment type, estimated volumes, target markets, timing, and any quality or certification requirements."}
+                </p>
+                <a href="mailto:info@actualtextiles.com?subject=Production%20enquiry%20-%20Actual%20Textiles"
+                  style={{ display:'inline-block', background:'var(--dark)', color:'white', padding:'14px 32px', fontSize:12, fontWeight:600, letterSpacing:'0.12em', textTransform:'uppercase' }}>
+                  {lang==='fr' ? 'Envoyer un brief' : 'Send a brief'}
+                </a>
+              </div>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <div style={{ display:'grid', gap:2 }}>
+                {cards.map((card, i) => (
+                  <a key={card.k} href={card.href} target={card.k === 'Address' || card.k === 'Adresse' ? '_blank' : undefined}
+                    rel={card.k === 'Address' || card.k === 'Adresse' ? 'noreferrer' : undefined}
+                    style={{ background:'white', padding:'30px 34px', display:'grid', gridTemplateColumns:'72px 1fr', gap:22, alignItems:'center', borderLeft:`3px solid ${i === 0 ? 'var(--amber)' : 'transparent'}` }}>
+                    <span style={{ fontFamily:'Cormorant Garamond, serif', fontSize:36, fontWeight:300, color:'var(--amber)', lineHeight:1 }}>0{i+1}</span>
+                    <span>
+                      <span style={{ display:'block', fontSize:10.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--mid)', marginBottom:8 }}>{card.k}</span>
+                      <span style={{ display:'block', fontSize:17, lineHeight:1.45, color:'var(--dark)' }}>{card.v}</span>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      );
+    }
+
+    function ContactDetails() {
+      const lang = useLang();
+      const details = lang === 'fr'
+        ? [
+            { title:'Production & sampling', body:'Développement produit, prototypes, SMS, productions complètes et exigences de qualité.' },
+            { title:'Certifications', body:'Demandes liées aux audits, standards sociaux, matières organiques et documentation qualité.' },
+            { title:'Logistique', body:'Questions FOB, CIF, LDP, fret aérien, marchés d’exportation et documents EUR1.' },
+          ]
+        : [
+            { title:'Production & sampling', body:'Product development, prototypes, SMS, full production runs, and quality requirements.' },
+            { title:'Certifications', body:'Audit, social compliance, organic materials, and quality documentation enquiries.' },
+            { title:'Logistics', body:'FOB, CIF, LDP, air freight, export markets, and EUR1 documentation questions.' },
+          ];
+      return (
+        <section style={{ background:'var(--stone)', padding:'110px 0' }}>
+          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 48px' }}>
+            <Reveal>
+              <Label>{lang==='fr' ? 'Pour accélérer la réponse' : 'To speed up the reply'}</Label>
+              <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:58, letterSpacing:'-0.01em', maxWidth:620 }}>
+                {lang==='fr' ? <>Choisissez le bon<br /><em>point de départ</em></> : <>Choose the right<br /><em>starting point</em></>}
+              </h2>
+            </Reveal>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:2 }}>
+              {details.map((item, i) => (
+                <Reveal key={item.title} delay={i * 0.08}>
+                  <div style={{ background:'white', padding:'34px 30px', minHeight:230 }}>
+                    <div style={{ fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--amber)', marginBottom:16 }}>0{i+1}</div>
+                    <h3 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:27, fontWeight:400, lineHeight:1.14, marginBottom:16 }}>{item.title}</h3>
+                    <p style={{ fontSize:14.5, lineHeight:1.72, color:'var(--mid)' }}>{item.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function ContactMapBand() {
+      const lang = useLang();
+      return (
+        <section className="at-contact-map" style={{ background:'var(--forest)', color:'white', padding:'0' }}>
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', minHeight:460 }}>
+            <div className="at-contact-map-copy" style={{ padding:'88px 48px', maxWidth:640, justifySelf:'end' }}>
+              <Reveal>
+                <Label color="rgba(255,255,255,0.48)">{lang==='fr' ? 'Localisation' : 'Location'}</Label>
+                <h2 style={{ fontFamily:'Cormorant Garamond, serif', fontSize:48, fontWeight:400, lineHeight:1.08, marginBottom:24 }}>
+                  {lang==='fr' ? <>Antananarivo,<br /><em>Madagascar</em></> : <>Antananarivo,<br /><em>Madagascar</em></>}
+                </h2>
+                <p style={{ fontSize:15.5, lineHeight:1.78, opacity:.76, marginBottom:30 }}>
+                  {lang==='fr'
+                    ? "Notre usine est implantée en zone franche, à proximité des équipes de développement, production, contrôle qualité et logistique."
+                    : "Our factory is located in a free zone, close to the development, production, quality control, and logistics teams."}
+                </p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ambohipanja%20Ilafy%20Tana%20103%20Antananarivo%20Madagascar"
+                  target="_blank" rel="noreferrer"
+                  style={{ display:'inline-block', border:'1px solid rgba(255,255,255,.45)', color:'white', padding:'13px 32px', fontSize:12, fontWeight:500, letterSpacing:'0.12em', textTransform:'uppercase' }}>
+                  {lang==='fr' ? 'Ouvrir la carte' : 'Open map'}
+                </a>
+              </Reveal>
+            </div>
+            <img className="at-contact-map-image" src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
+              alt="Actual Textiles Madagascar" loading="lazy"
+              style={{ width:'100%', height:'100%', minHeight:460, objectFit:'cover', objectPosition:'center 32%', filter:'brightness(.82)' }} />
+          </div>
+        </section>
+      );
+    }
+
+    function App() {
+      const [lang, setLang] = useState(() => localStorage.getItem('at-lang') || 'en');
+      const [scrolled, setScrolled] = useState(false);
+      const handleSetLang = (l) => { localStorage.setItem('at-lang', l); setLang(l); };
+      useEffect(() => {
+        const fn = () => setScrolled(window.scrollY > 60);
+        window.addEventListener('scroll', fn, { passive:true });
+        return () => window.removeEventListener('scroll', fn);
+      }, []);
+      return (
+        <LangCtx.Provider value={lang}>
+          <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="contact" />
+          <PageHero
+            label={lang==='fr' ? 'Contact' : 'Contact'}
+            title={lang==='fr' ? 'Nous contacter' : 'Get in touch'}
+            titleItalic={lang==='fr' ? 'avec notre équipe' : 'with our team'}
+            breadcrumb={lang==='fr' ? 'Accueil / Contact' : 'Home / Contact'}
+            imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-6.jpeg"
+          />
+          <ContactIntro />
+          <ContactDetails />
+          <ContactMapBand />
+          <SharedFooter />
+        </LangCtx.Provider>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

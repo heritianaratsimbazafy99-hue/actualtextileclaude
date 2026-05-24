@@ -6,7 +6,7 @@ function useT() { const l = useLang(); return T[l] || T.en; }
 const T = {
   en: {
     nav: { about:'About', production:'Production', sustainability:'Sustainability',
-           certifications:'Certifications', news:'News', contact:'Get in touch' },
+           certifications:'Certifications', contact:'Contact', cta:'Get in touch' },
     hero: {
       taglines: ['Fashion Creator','Malagasy Know-How','Responsible Company'],
       line1:'Excellence', line2:'in every stitch,', line3:'from Madagascar',
@@ -53,20 +53,6 @@ const T = {
       label:'Standards & certifications', title1:'Quality', titleItalic:'you can trust',
       body:'Our certifications are renewed annually, reflecting our consistent top-tier scores and commitment to the highest international standards.',
     },
-    news: {
-      label:'Latest updates', title:'Newsroom', all:'All articles',
-      items:[
-        { date:'2 June 2025', title:'World No Tobacco Day: A Powerful Message for Employee Health',
-          excerpt:'Actual Textiles launched a unique initiative to raise awareness among employees about the dangers of tobacco and to promote a healthier work environment.',
-          href:'https://www.actualtextiles.com/textile-madagascar-actual-textiles-celebrates-world-no-tobacco-day-with-a-powerful-message-for-employee-health/' },
-        { date:'26 May 2025', title:'Committing to Biodiversity and the Planet',
-          excerpt:"On the International Day for Biological Diversity, Actual Textiles reaffirms its environmental and social commitments to protect Madagascar\u2019s unique ecosystem.",
-          href:'https://www.actualtextiles.com/textile-in-madagascar-actual-textiles-commits-to-biodiversity-and-the-planetmay-22-2025-antananarivo-madagascar/' },
-        { date:'19 May 2025', title:'Together for a Sustainable and Responsible Textile Future',
-          excerpt:"Celebrating World Fair Trade Day by reaffirming our commitment to sustainable, humane practices across Madagascar\u2019s textile sector.",
-          href:'https://www.actualtextiles.com/together-lets-grow-a-more-responsible-future-for-a-more-sustainable-malagasy-textile-industry-celebrating-world-fair-trade-day/' },
-      ],
-    },
     cta: {
       label:'Partner with us', title1:'Ready to bring your', titleItalic:'collection to life?',
       body:"Whether you need sampling, full production runs, or a complete design-to-delivery solution — our team is ready to exceed your expectations.",
@@ -79,14 +65,14 @@ const T = {
         { title:'About', links:[{label:'Overview',href:'./about.html'},{label:'Madagascar',href:'./about.html#madagascar'},{label:'Factory & Team',href:'./about.html#factory'},{label:'Careers',href:'https://www.actualtextiles.com/talents/'}] },
         { title:'Production', links:[{label:'Our Products',href:'./production.html'},{label:'Quality Control',href:'./production.html#qc'},{label:'Technology',href:'./production.html#technology'},{label:'Logistics',href:'./production.html#logistics'}] },
         { title:'Sustainability', links:[{label:'Environment',href:'./sustainability.html#environment'},{label:'Health & Safety',href:'./sustainability.html#health'},{label:'Social Projects',href:'./sustainability.html#social'},{label:'Certifications',href:'./sustainability.html#certifications'}] },
-        { title:'Contact', links:[{label:'Get in Touch',href:'mailto:info@actualtextiles.com'},{label:'Press / Media',href:'https://www.actualtextiles.com/news/'},{label:'Legal Notice',href:'https://www.actualtextiles.com/legal-notice/'},{label:'Privacy Policy',href:'https://www.actualtextiles.com/privacy-policy/'}] },
+        { title:'Contact', links:[{label:'Contact page',href:'./contact.html'},{label:'Email',href:'mailto:info@actualtextiles.com'},{label:'Legal Notice',href:'https://www.actualtextiles.com/legal-notice/'},{label:'Privacy Policy',href:'https://www.actualtextiles.com/privacy-policy/'}] },
       ],
     },
   },
 
   fr: {
     nav: { about:'\u00c0 propos', production:'Production', sustainability:'Durabilit\u00e9',
-           certifications:'Certifications', news:'Actualit\u00e9s', contact:'Nous contacter' },
+           certifications:'Certifications', contact:'Contact', cta:'Nous contacter' },
     hero: {
       taglines: ['Cr\u00e9ateur de mode','Savoir-faire Malgache','Entreprise responsable'],
       line1:"L'excellence", line2:'\u00e0 chaque point,', line3:'depuis Madagascar',
@@ -133,20 +119,6 @@ const T = {
       label:'Normes & certifications', title1:'Une qualit\u00e9', titleItalic:'certifi\u00e9e',
       body:"Nos certifications sont renouvel\u00e9es annuellement, refl\u00e9tant notre excellence constante et notre engagement envers les plus hauts standards internationaux.",
     },
-    news: {
-      label:'Derni\u00e8res actualit\u00e9s', title:'Actualit\u00e9s', all:'Tous les articles',
-      items:[
-        { date:'2 juin 2025', title:'Journ\u00e9e mondiale sans tabac\u00a0: un message fort pour la sant\u00e9',
-          excerpt:"Actual Textiles a lanc\u00e9 une initiative unique pour sensibiliser ses employ\u00e9s aux dangers du tabac et promouvoir un environnement de travail plus sain.",
-          href:'https://www.actualtextiles.com/textile-madagascar-actual-textiles-celebrates-world-no-tobacco-day-with-a-powerful-message-for-employee-health/' },
-        { date:'26 mai 2025', title:'Engag\u00e9s pour la biodiversit\u00e9 et la plan\u00e8te',
-          excerpt:"\u00c0 l'occasion de la Journ\u00e9e internationale de la diversit\u00e9 biologique, Actual Textiles r\u00e9affirme ses engagements environnementaux et sociaux pour prot\u00e9ger l'\u00e9cosyst\u00e8me unique de Madagascar.",
-          href:'https://www.actualtextiles.com/textile-in-madagascar-actual-textiles-commits-to-biodiversity-and-the-planetmay-22-2025-antananarivo-madagascar/' },
-        { date:'19 mai 2025', title:'Ensemble pour un avenir textile durable et responsable',
-          excerpt:"\u00c0 l'occasion de la Journ\u00e9e mondiale du commerce \u00e9quitable, nous r\u00e9affirmons notre engagement envers des pratiques durables et humaines.",
-          href:'https://www.actualtextiles.com/together-lets-grow-a-more-responsible-future-for-a-more-sustainable-malagasy-textile-industry-celebrating-world-fair-trade-day/' },
-      ],
-    },
     cta: {
       label:'Partenaires', title1:'Pr\u00eats \u00e0 donner vie \u00e0', titleItalic:'votre collection\u00a0?',
       body:"Que vous ayez besoin d'\u00e9chantillons, de productions compl\u00e8tes ou d'une solution design-to-delivery \u2014 notre \u00e9quipe est pr\u00eate \u00e0 d\u00e9passer vos attentes.",
@@ -159,7 +131,7 @@ const T = {
         { title:'\u00c0 propos', links:[{label:'Aper\u00e7u',href:'./about.html'},{label:'Madagascar',href:'./about.html#madagascar'},{label:'Usine & \u00c9quipe',href:'./about.html#factory'},{label:'Carri\u00e8res',href:'https://www.actualtextiles.com/talents/'}] },
         { title:'Production', links:[{label:'Nos produits',href:'./production.html'},{label:'Contr\u00f4le qualit\u00e9',href:'./production.html#qc'},{label:'Technologie',href:'./production.html#technology'},{label:'Logistique',href:'./production.html#logistics'}] },
         { title:'Durabilit\u00e9', links:[{label:'Environnement',href:'./sustainability.html#environment'},{label:'Sant\u00e9 & S\u00e9curit\u00e9',href:'./sustainability.html#health'},{label:'Projets sociaux',href:'./sustainability.html#social'},{label:'Certifications',href:'./sustainability.html#certifications'}] },
-        { title:'Contact', links:[{label:'Nous contacter',href:'mailto:info@actualtextiles.com'},{label:'Presse / M\u00e9dias',href:'https://www.actualtextiles.com/news/'},{label:'Mentions l\u00e9gales',href:'https://www.actualtextiles.com/legal-notice/'},{label:'Confidentialit\u00e9',href:'https://www.actualtextiles.com/privacy-policy/'}] },
+        { title:'Contact', links:[{label:'Page contact',href:'./contact.html'},{label:'Email',href:'mailto:info@actualtextiles.com'},{label:'Mentions l\u00e9gales',href:'https://www.actualtextiles.com/legal-notice/'},{label:'Confidentialit\u00e9',href:'https://www.actualtextiles.com/privacy-policy/'}] },
       ],
     },
   },

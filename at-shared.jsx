@@ -45,7 +45,7 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
     { key: 'about',          label: t.nav.about,          href: './about.html' },
     { key: 'production',     label: t.nav.production,     href: './production.html' },
     { key: 'sustainability', label: t.nav.sustainability,  href: './sustainability.html' },
-    { key: 'news',           label: t.nav.news,            href: 'https://www.actualtextiles.com/news/' },
+    { key: 'contact',        label: t.nav.contact,         href: './contact.html' },
   ];
 
   _useEffect(() => {
@@ -110,13 +110,13 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
               );
             })}
           </div>
-          <a className="at-nav-contact" href="mailto:info@actualtextiles.com" style={{
+          <a className="at-nav-contact" href="./contact.html" style={{
             background: scrolled ? 'var(--forest)' : 'rgba(255,255,255,0.15)',
             border: scrolled ? 'none' : '1px solid rgba(255,255,255,0.5)',
             color: 'white', padding: '9px 20px',
             fontSize: 11, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
             transition: 'all .25s', whiteSpace: 'nowrap',
-          }}>{t.nav.contact}</a>
+          }}>{t.nav.cta || t.nav.contact}</a>
         </div>
 
         <button
@@ -160,7 +160,7 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
                 onClick={() => { setLang(lg.toLowerCase()); setMobileOpen(false); }}>{lg}</button>
             );
           })}
-          <a href="mailto:info@actualtextiles.com" onClick={() => setMobileOpen(false)}>{t.nav.contact}</a>
+          <a href="./contact.html" onClick={() => setMobileOpen(false)}>{t.nav.cta || t.nav.contact}</a>
         </div>
       </div>
     </nav>

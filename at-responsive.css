@@ -290,6 +290,16 @@
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
+  .at-contact-map-copy {
+    padding: 64px var(--mobile-gutter) !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+  }
+
+  .at-contact-map-image {
+    min-height: 320px !important;
+  }
+
   [style*="gap: 96px"],
   [style*="gap: 72px"],
   [style*="gap: 64px"] {

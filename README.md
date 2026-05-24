@@ -8,6 +8,7 @@ Static React prototype for Actual Textiles Madagascar.
 - `about.html` - company overview
 - `production.html` - production capabilities
 - `sustainability.html` - sustainability and certifications
+- `contact.html` - contact details and project enquiry entry point
 
 The site uses React, ReactDOM, Babel Standalone, Google Fonts, and hosted media assets from the existing Actual Textiles website via CDN links.
 

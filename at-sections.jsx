@@ -268,60 +268,6 @@ function CertificationsSection() {
   );
 }
 
-// ── News Section ──────────────────────────────────────────────────────────────
-function NewsSection() {
-  const t = useT();
-  const n = t.news;
-  const [hov, setHov] = React.useState(null);
-  return (
-    <section id="news" style={{ background: 'var(--stone)', padding: '100px 0' }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 48px' }}>
-        <Reveal>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
-            marginBottom: 52, flexWrap: 'wrap', gap: 18 }}>
-            <div>
-              <Label>{n.label}</Label>
-              <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 54,
-                fontWeight: 400, lineHeight: 1.08, letterSpacing: '-0.01em' }}>{n.title}</h2>
-            </div>
-            <a href="https://www.actualtextiles.com/news/" target="_blank" rel="noreferrer"
-              style={{ fontSize: 12, fontWeight: 500, letterSpacing: '0.12em',
-                textTransform: 'uppercase', color: 'var(--dark)',
-                borderBottom: '1px solid var(--dark)', paddingBottom: 2 }}>
-              {n.all} →
-            </a>
-          </div>
-        </Reveal>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2 }}>
-          {n.items.map((item, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <a href={item.href} target="_blank" rel="noreferrer"
-                onMouseEnter={() => setHov(i)} onMouseLeave={() => setHov(null)}
-                style={{ background: 'white', display: 'block', padding: '34px 30px',
-                  textDecoration: 'none', color: 'inherit',
-                  transition: 'transform .25s, box-shadow .25s',
-                  transform: hov===i ? 'translateY(-4px)' : 'none',
-                  boxShadow: hov===i ? '0 12px 36px rgba(0,0,0,0.07)' : 'none' }}>
-                <div style={{ fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase',
-                  color: 'var(--amber)', marginBottom: 14 }}>{item.date}</div>
-                <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 23,
-                  fontWeight: 400, lineHeight: 1.25, marginBottom: 14, letterSpacing: '-0.01em' }}>{item.title}</h3>
-                <p style={{ fontSize: 13.5, lineHeight: 1.72, color: 'var(--mid)' }}>{item.excerpt}</p>
-                <div style={{ marginTop: 22, fontSize: 11.5, fontWeight: 500, letterSpacing: '0.1em',
-                  textTransform: 'uppercase', color: 'var(--forest)', display: 'flex',
-                  alignItems: 'center', gap: 6 }}>
-                  {useLang()==='fr' ? 'Lire la suite' : 'Read more'}
-                  <span style={{ transition: 'transform .2s', transform: hov===i ? 'translateX(4px)' : 'none' }}>→</span>
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── CTA Banner ────────────────────────────────────────────────────────────────
 function CTABanner() {
   const t = useT();
@@ -337,7 +283,7 @@ function CTABanner() {
             {c.title1}<br /><em>{c.titleItalic}</em>
           </h2>
           <p style={{ fontSize: 15.5, lineHeight: 1.75, marginBottom: 36, opacity: 0.85 }}>{c.body}</p>
-          <a href="mailto:info@actualtextiles.com"
+          <a href="./contact.html"
             style={{ background: 'white', color: 'var(--amber)', padding: '15px 40px',
               fontSize: 12, fontWeight: 600, letterSpacing: '0.12em',
               textTransform: 'uppercase', display: 'inline-block' }}>{c.btn}</a>
@@ -347,4 +293,4 @@ function CTABanner() {
   );
 }
 
-Object.assign(window, { StatsBar, AboutSection, ProductionSection, SustainabilitySection, CertificationsSection, NewsSection, CTABanner });
+Object.assign(window, { StatsBar, AboutSection, ProductionSection, SustainabilitySection, CertificationsSection, CTABanner });
