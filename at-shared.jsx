@@ -69,7 +69,7 @@ function SharedNav({ lang, setLang, scrolled, activePage }) {
       <div style={{ maxWidth:1280, margin:'0 auto', padding:`0 ${isMobile?'20px':'48px'}`,
         display:'flex', alignItems:'center', justifyContent:'space-between', height:isMobile?56:68 }}>
         <a href="./Actual Textiles Redesign.html" style={{ display:'flex', alignItems:'center' }}>
-          <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
+          <img src="./assets/actual-textiles/Actual-Textiles-LOGO.png"
             alt="Actual Textiles"
             style={{ height:isMobile?26:30, width:'auto',
               filter:opaque?'none':'brightness(0) invert(1)', transition:'filter .3s' }} />
@@ -199,7 +199,7 @@ function SharedFooter() {
         <div style={{ display:'grid', gridTemplateColumns:m?'1fr':'1.4fr 1fr 1fr 1fr 1fr',
           gap:m?40:44, marginBottom:m?44:60 }}>
           <div>
-            <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-LOGO.png"
+            <img src="./assets/actual-textiles/Actual-Textiles-LOGO.png"
               alt="Actual Textiles"
               style={{ height:34, width:'auto', filter:'brightness(0) invert(1)', marginBottom:20 }} />
             <p style={{ fontSize:13, lineHeight:1.75, opacity:.5, marginBottom:20, maxWidth:240 }}>{ft.tagline}</p>

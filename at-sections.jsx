@@ -31,7 +31,7 @@ function AboutSection() {
         display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?48:96, alignItems:'center' }}>
         <Reveal>
           <div style={{ position:'relative' }}>
-            <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
+            <img src="./assets/actual-textiles/Madagascar_actual_textiles-min.jpg"
               alt="Madagascar" style={{ width:'100%', height:m?300:560, objectFit:'cover', objectPosition:'center 32%' }} />
             <div style={{ position:'absolute', bottom:m?-18:-26, right:m?-10:-26,
               background:'var(--amber)', color:'white', padding:m?'14px 18px':'20px 28px', zIndex:2 }}>
@@ -76,12 +76,12 @@ function AboutSection() {
 
 // ── Production Section ────────────────────────────────────────────────────────
 const PROD_IMGS = [
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg',
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg',
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg',
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg',
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg',
-  'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg',
+  './assets/actual-textiles/developpement_produits.jpg',
+  './assets/actual-textiles/confection_vetements.jpg',
+  './assets/actual-textiles/departement-de_coupe.jpg',
+  './assets/actual-textiles/departement_couture.jpg',
+  './assets/actual-textiles/controle_qualite-min.jpg',
+  './assets/actual-textiles/departement_logistique.jpg',
 ];
 
 function ProductionSection() {
@@ -140,9 +140,9 @@ function SustainabilitySection() {
   const t = useT(); const s = t.sustainability; const m = useMobile();
   const [hov, setHov] = React.useState(null);
   const imgs = [
-    'https://www.actualtextiles.com/wp-content/uploads/2021/11/Environnement-5.jpg',
-    'https://www.actualtextiles.com/wp-content/uploads/2022/07/RAF_2e-114-copie-scaled.jpg',
-    'https://www.actualtextiles.com/wp-content/uploads/2021/11/Sociale-chez-Actual-textiles.jpg',
+    './assets/actual-textiles/Environnement-5.jpg',
+    './assets/actual-textiles/RAF_2e-114-copie-scaled.jpg',
+    './assets/actual-textiles/Sociale-chez-Actual-textiles.jpg',
   ];
   return (
     <section id="sustainability" style={{ background:'var(--forest)', color:'white', padding:`${m?'70px':'120px'} 0` }}>
@@ -202,16 +202,16 @@ function SustainabilitySection() {
 
 // ── Certifications ────────────────────────────────────────────────────────────
 const CERTS = [
-  { name:'GOTS', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/LOGO-GOTS-A-JOUR-1024x1015.png' },
-  { name:'OCS Ecocert', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Organic-100.png' },
-  { name:'WRAP', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/wrap_logo.jpg' },
-  { name:'amfori BSCI', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Business-Social-Compliance.png' },
-  { name:'SMETA/Sedex', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/SMETA.png' },
-  { name:'GSV Intertek', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Global-security-verification.png' },
-  { name:'ICS', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/ICS.png' },
-  { name:'AGOA', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/agoa_logo.jpg' },
-  { name:'Disney', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Authorized-Disney.png' },
-  { name:'Lectra', src:'https://www.actualtextiles.com/wp-content/uploads/2024/10/Lectra.png' },
+  { name:'GOTS', src:'./assets/actual-textiles/LOGO-GOTS-A-JOUR-1024x1015.png' },
+  { name:'OCS Ecocert', src:'./assets/actual-textiles/Organic-100.png' },
+  { name:'WRAP', src:'./assets/actual-textiles/wrap_logo.jpg' },
+  { name:'amfori BSCI', src:'./assets/actual-textiles/Business-Social-Compliance.png' },
+  { name:'SMETA/Sedex', src:'./assets/actual-textiles/SMETA.png' },
+  { name:'GSV Intertek', src:'./assets/actual-textiles/Global-security-verification.png' },
+  { name:'ICS', src:'./assets/actual-textiles/ICS.png' },
+  { name:'AGOA', src:'./assets/actual-textiles/agoa_logo.jpg' },
+  { name:'Disney', src:'./assets/actual-textiles/Authorized-Disney.png' },
+  { name:'Lectra', src:'./assets/actual-textiles/Lectra.png' },
 ];
 
 function CertificationsSection() {

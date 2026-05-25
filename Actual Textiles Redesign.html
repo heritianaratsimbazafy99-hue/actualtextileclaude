@@ -74,7 +74,7 @@
       const mc = dark ? 'rgba(255,255,255,0.65)' : 'var(--mid)';
       return (
         <div id="top" style={{ position:'relative', height:m?'90vh':'100vh', minHeight:m?520:680, overflow:'hidden' }}>
-          <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg"
+          <img src="./assets/actual-textiles/La-production-de-Actual-textiles.jpg"
             alt="Actual Textiles" fetchpriority="high"
             style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 28%' }} />
           <div style={{ position:'absolute', inset:0, background: dark
@@ -117,9 +117,9 @@
               display:'grid', gridTemplateColumns:'repeat(3,1fr)', height:108,
               animation:'slideUp 1s .55s cubic-bezier(.22,1,.36,1) both' }}>
               {[
-                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/atelier_confection1.jpg', label:'Sewing' },
-                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg', label:'Fabrics' },
-                { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg', label:'Quality' },
+                { src:'./assets/actual-textiles/atelier_confection1.jpg', label:'Sewing' },
+                { src:'./assets/actual-textiles/tissus_hautes_qualites-min.jpg', label:'Fabrics' },
+                { src:'./assets/actual-textiles/controle_qualite-min.jpg', label:'Quality' },
               ].map((im,i) => (
                 <div key={i} style={{ position:'relative', overflow:'hidden' }}>
                   <img src={im.src} alt={im.label} style={{ width:'100%', height:'100%', objectFit:'cover', filter:'brightness(.55)' }} />
@@ -160,10 +160,10 @@
       return (
         <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', height:260 }}>
           {[
-            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-6.jpeg', label:'Know-how' },
-            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg', label:'Production' },
-            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg', label:'Craftsmanship' },
-            { src:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-3.jpeg', label:'Precision' },
+            { src:'./assets/actual-textiles/Actual-Textiles-6.jpeg', label:'Know-how' },
+            { src:'./assets/actual-textiles/La-production-de-Actual-textiles.jpg', label:'Production' },
+            { src:'./assets/actual-textiles/Actual-Textiles-4.jpeg', label:'Craftsmanship' },
+            { src:'./assets/actual-textiles/Actual-Textiles-3.jpeg', label:'Precision' },
           ].map((im,i) => (
             <div key={i} style={{ position:'relative', overflow:'hidden' }}>
               <img src={im.src} alt={im.label} loading="lazy"

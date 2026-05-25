@@ -32,19 +32,19 @@
         { title:isFr?"Vêtements enfants":'Children\'s Clothing',
           desc:isFr?"Notre spécialité historique — bodies, vêtements de sport et de ville dans une grande variété de matières et styles."
                   :"Our historic speciality — from babywear to sportswear across a wide variety of materials and styles.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/createur_vetements.jpg' },
+          img:'./assets/actual-textiles/createur_vetements.jpg' },
         { title:isFr?'Mode femme':'Women\'s Fashion',
           desc:isFr?"Blouses, hauts, chemisiers — avec une attention particulière aux finitions et à la tombe premium."
                   :"Blouses, shirts, tops — with particular attention to finishes, drape, and premium-quality details.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg' },
+          img:'./assets/actual-textiles/confection_vetements.jpg' },
         { title:isFr?'Loungewear & Sleepwear':'Loungewear & Sleepwear',
           desc:isFr?"Pyjamas, nuisettes, tenues détente — experts en matières douces et finitions soignées."
                   :"Pyjamas, nightgowns, leisure wear — experts in soft materials and refined finishes.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-4.jpeg' },
+          img:'./assets/actual-textiles/Actual-Textiles-4.jpeg' },
         { title:isFr?'Accessoires & Autres':'Accessories & More',
           desc:isFr?"Notre expertise s'étend à une large gamme d'autres vêtements et accessoires."
                   :"Our expertise extends to a wide range of garments and accessories.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/tissus_hautes_qualites-min.jpg' },
+          img:'./assets/actual-textiles/tissus_hautes_qualites-min.jpg' },
       ];
       return (
         <section style={{ padding:sp(m), background:'var(--cream)' }}>
@@ -82,12 +82,12 @@
       const t = useT(); const p = t.production; const m = useMobile();
       const [active, setActive] = useState(0);
       const imgs = [
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg',
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/confection_vetements.jpg',
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg',
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg',
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg',
-        'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg',
+        './assets/actual-textiles/developpement_produits.jpg',
+        './assets/actual-textiles/confection_vetements.jpg',
+        './assets/actual-textiles/departement-de_coupe.jpg',
+        './assets/actual-textiles/departement_couture.jpg',
+        './assets/actual-textiles/controle_qualite-min.jpg',
+        './assets/actual-textiles/departement_logistique.jpg',
       ];
       return (
         <section style={{ background:'var(--stone)', padding:sp(m) }}>
@@ -152,7 +152,7 @@
           <div style={{ maxWidth:1280, margin:'0 auto', padding:pad(m),
             display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?36:96, alignItems:'center' }}>
             <Reveal>
-              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Actual-Textiles-5.jpg" alt="Technology" loading="lazy"
+              <img src="./assets/actual-textiles/Actual-Textiles-5.jpg" alt="Technology" loading="lazy"
                 style={{ width:'100%', height:m?240:480, objectFit:'cover' }} />
             </Reveal>
             <Reveal delay={m?0:0.14}>
@@ -212,7 +212,7 @@
               </a>
             </Reveal>
             <Reveal delay={m?0:0.14}>
-              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/controle_qualite-min.jpg"
+              <img src="./assets/actual-textiles/controle_qualite-min.jpg"
                 alt="Quality Control" loading="lazy"
                 style={{ width:'100%', height:m?240:500, objectFit:'cover' }} />
             </Reveal>
@@ -239,7 +239,7 @@
             <PageHero label="Production"
               title={isFr?'Excellence':'Excellence'}
               titleItalic={isFr?'à chaque étape':'at every step'}
-              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/La-production-de-Actual-textiles.jpg"
+              imgSrc="./assets/actual-textiles/La-production-de-Actual-textiles.jpg"
               breadcrumb={isFr?'Accueil → Production':'Home → Production'} />
             <ProductsSection />
             <ProcessSection />

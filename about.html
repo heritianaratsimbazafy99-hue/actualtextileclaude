@@ -35,7 +35,7 @@
             display:'grid', gridTemplateColumns:m?'1fr':'1fr 1fr', gap:m?40:96, alignItems:'center' }}>
             <Reveal>
               <div style={{ position:'relative' }}>
-                <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
+                <img src="./assets/actual-textiles/Madagascar_actual_textiles-min.jpg"
                   alt="Madagascar" style={{ width:'100%', height:m?280:560, objectFit:'cover', objectPosition:'center 32%' }} />
                 <div style={{ position:'absolute', bottom:m?-16:-26, right:m?-8:-26,
                   background:'var(--amber)', color:'white', padding:m?'12px 16px':'20px 28px', zIndex:2 }}>
@@ -110,7 +110,7 @@
               </div>
             </Reveal>
             <Reveal delay={m?0:0.14}>
-              <img src="https://www.actualtextiles.com/wp-content/uploads/2021/11/Madagascar_actual_textiles-min.jpg"
+              <img src="./assets/actual-textiles/Madagascar_actual_textiles-min.jpg"
                 alt="Madagascar" loading="lazy"
                 style={{ width:'100%', height:m?260:520, objectFit:'cover', objectPosition:'center 20%' }} />
             </Reveal>
@@ -125,27 +125,27 @@
         { title:isFr?'Ventes & Marketing':'Sales & Marketing', num:'01',
           desc:isFr?"En contact permanent avec nos clients, l'équipe commerciale suit chaque projet de A à Z et planifie les capacités de production."
                   :"In constant contact with clients, the sales team follows every project step by step and plans production capacity.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_ventes.jpg' },
+          img:'./assets/actual-textiles/departement_ventes.jpg' },
         { title:isFr?'Développement produit':'Product Development', num:'02',
           desc:isFr?"Prototypes, gradations, échantillons SMS et de pré-production — notre équipe utilise le système LECTRA pour des modèles précis."
                   :"Prototypes, size sets, SMS and pre-production samples — our team uses the LECTRA system to generate accurate models.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/developpement_produits.jpg' },
+          img:'./assets/actual-textiles/developpement_produits.jpg' },
         { title:isFr?'Coupe':'Cutting', num:'03',
           desc:isFr?"Notre atelier de coupe respecte scrupuleusement les spécifications de patron pour garantir la précision à chaque étape."
                   :"The cutting room strictly adheres to all pattern specifications, ensuring precision at every phase of construction.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-de_coupe.jpg' },
+          img:'./assets/actual-textiles/departement-de_coupe.jpg' },
         { title:isFr?'Couture':'Sewing', num:'04',
           desc:isFr?"Travaillant avec AQL 1.0, nos couturières assemblent méticuleusement chaque pièce selon des standards qualité stricts."
                   :"Working with AQL 1.0, our sewers meticulously assemble every garment to strict quality guidelines.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_couture.jpg' },
+          img:'./assets/actual-textiles/departement_couture.jpg' },
         { title:isFr?'Finition & Inspection':'Finishing & Inspection', num:'05',
           desc:isFr?"Inspection complète à 100% — vêtements vérifiés, repassés, étiquetés et conditionnés selon les exigences exactes."
                   :"100% comprehensive inspection — garments fully screened, pressed, labeled and packaged to exact specifications.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement-finition_inspection.jpg' },
+          img:'./assets/actual-textiles/departement-finition_inspection.jpg' },
         { title:isFr?'Logistique':'Logistics', num:'06',
           desc:isFr?"Expédition FOB, CIF ou LDP avec fret aérien compétitif. Formulaire SGP EUR1 inclus sur toutes les livraisons."
                   :"FOB, CIF or LDP dispatch with competitive air freight. SGP EUR1 form included on all deliveries.",
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/departement_logistique.jpg' },
+          img:'./assets/actual-textiles/departement_logistique.jpg' },
       ];
       return (
         <section id="factory" style={{ background:'var(--stone)', padding:sp(m) }}>
@@ -183,11 +183,11 @@
       const lang = useLang(); const m = useMobile(); const isFr = lang==='fr';
       const team = [
         { name:'Mezbine Ismael', role:isFr?'Fondateur':'Founder',
-          img:'https://www.actualtextiles.com/wp-content/uploads/2021/11/Mezbine-ISMAEL.png',
+          img:'./assets/actual-textiles/Mezbine-ISMAEL.png',
           bio:isFr?"Fondateur d'Actual Textiles, Mezbine a bâti l'entreprise sur les valeurs de qualité, d'intégrité et d'innovation depuis 2002."
                  :"Founder of Actual Textiles, Mezbine built the company on quality, integrity and innovation since 2002." },
         { name:'Ilann Hiridjee', role:isFr?'Directeur Général':'General Manager',
-          img:'https://www.actualtextiles.com/wp-content/uploads/2022/06/ilann_hiridjee.png',
+          img:'./assets/actual-textiles/ilann_hiridjee.png',
           bio:isFr?"Ilann dirige les opérations d'Actual Textiles avec une vision centrée sur l'innovation, la durabilité et la satisfaction client."
                  :"Ilann leads Actual Textiles operations with a vision centered on innovation, sustainability and client satisfaction." },
       ];
@@ -242,7 +242,7 @@
             <SharedNav lang={lang} setLang={handleSetLang} scrolled={scrolled} activePage="about" />
             <PageHero label={isFr?'À propos':'About us'} title={isFr?'Qui sommes':'Who we'}
               titleItalic={isFr?'nous ?':'are'}
-              imgSrc="https://www.actualtextiles.com/wp-content/uploads/2021/11/fond_actual_textiles_madagascar-min.jpg"
+              imgSrc="./assets/actual-textiles/fond_actual_textiles_madagascar-min.jpg"
               breadcrumb={isFr?'Accueil → À propos':'Home → About'} />
             <OverviewSection />
             <MadagascarSection />
