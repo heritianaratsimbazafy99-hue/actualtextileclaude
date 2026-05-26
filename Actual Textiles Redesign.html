@@ -78,7 +78,7 @@
             alt="Actual Textiles" fetchpriority="high"
             style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 28%' }} />
           <div style={{ position:'absolute', inset:0, background: dark
-            ? 'linear-gradient(155deg,rgba(14,26,18,.9) 0%,rgba(14,26,18,.68) 46%,rgba(14,26,18,.42) 74%,rgba(0,0,0,.32) 100%)'
+            ? 'linear-gradient(155deg,rgba(14,26,18,.84) 0%,rgba(14,26,18,.5) 65%,rgba(0,0,0,.28) 100%)'
             : 'linear-gradient(155deg,rgba(248,245,240,.9) 0%,rgba(248,245,240,.58) 65%,transparent 100%)' }} />
           <div style={{ position:'relative', zIndex:2, maxWidth:1280, margin:'0 auto',
             padding:`0 ${m?'20px':'48px'}`, height:'100%',
@@ -96,10 +96,16 @@
                 animation:'slideUp 1s .1s cubic-bezier(.22,1,.36,1) both' }}>
                 {h.h1a}<br /><em style={{ fontWeight:300 }}>{h.h1b}</em><br />{h.h1c}
               </h1>
-              <p style={{ fontSize:m?14.5:16.5, lineHeight:1.72, color:mc,
-                maxWidth:m?'100%':490, marginBottom:m?32:40,
-                textShadow:dark?'0 2px 18px rgba(0,0,0,.38)':'none',
-                animation:'slideUp 1s .25s cubic-bezier(.22,1,.36,1) both' }}>{h.sub}</p>
+              <div style={{ position:'relative', maxWidth:m?'100%':500, marginBottom:m?32:40,
+                animation:'slideUp 1s .25s cubic-bezier(.22,1,.36,1) both' }}>
+                {dark && <div aria-hidden="true" style={{ position:'absolute',
+                  inset:m?'-10px -12px':'-12px -18px',
+                  background:'linear-gradient(90deg,rgba(8,18,12,.54) 0%,rgba(8,18,12,.34) 58%,rgba(8,18,12,0) 100%)',
+                  filter:'blur(8px)', pointerEvents:'none' }} />}
+                <p style={{ position:'relative', fontSize:m?14.5:16.5, lineHeight:1.72, color:mc,
+                  maxWidth:m?'100%':490, margin:0,
+                  textShadow:dark?'0 2px 18px rgba(0,0,0,.38)':'none' }}>{h.sub}</p>
+              </div>
               <div style={{ display:'flex', gap:12, flexWrap:'wrap',
                 animation:'slideUp 1s .4s cubic-bezier(.22,1,.36,1) both' }}>
                 <a href="./about.html" style={{ background:'var(--amber)', color:'white',
